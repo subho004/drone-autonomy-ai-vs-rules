@@ -1,0 +1,24 @@
+# A8 gate slalom.
+name: sim_gates
+notes: A8 gate slalom.
+suite:
+  name: gates
+  kind: gates
+  n: 24
+  base_seed: 5500
+latency_sweep_ms:
+- 0
+- 50
+- 100
+- 200
+- 300
+- 500
+shield:
+- 0
+cadence:
+- sequential
+reps: 1
+arms:
+- id: gate_pilot
+  kind: gate_pilot
+  measured: false

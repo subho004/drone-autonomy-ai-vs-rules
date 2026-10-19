@@ -1,0 +1,7 @@
+-r core.txt
+pandas>=3.0.6
+pyarrow>=25.0.1
+duckdb>=1.5.6
+scipy>=1.18.1
+statsmodels>=0.15.0
+matplotlib>=3.11.2

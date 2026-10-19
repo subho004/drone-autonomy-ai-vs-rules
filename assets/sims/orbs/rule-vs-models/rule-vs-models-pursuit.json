@@ -1,0 +1,20 @@
+[
+  {
+    "flight": "A_pursuit_d0_o0_s6005",
+    "label": "rule-based pilot, 0 ms | pursuit orbs",
+    "outcome": "landed_on_pad",
+    "success": true
+  },
+  {
+    "flight": "B_mercury_pursuit_s6005",
+    "label": "drone 521 ms | pursuit orbs",
+    "outcome": "crash",
+    "success": false
+  },
+  {
+    "flight": "B_jev_pursuit_s6005",
+    "label": "drone 517 ms | pursuit orbs",
+    "outcome": "crash",
+    "success": false
+  }
+]

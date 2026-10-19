@@ -1,0 +1,20 @@
+{
+  "scenario_seed": 5312,
+  "frames": 281,
+  "sides": [
+    {
+      "flight_id": 18978,
+      "label": "injected latency 0 ms",
+      "outcome": "success",
+      "success": true,
+      "task": {}
+    },
+    {
+      "flight_id": 18981,
+      "label": "injected latency 300 ms",
+      "outcome": "collision",
+      "success": false,
+      "task": {}
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+# Live decision models flown on the same certified scenarios as the pilot (paired by scenario id).
+# API arms use their own measured wall-clock latency (this machine, this network); a hard USD
+# cap (BUDGET_USD) is enforced by the budget ledger. Classical references run measured too.
+name: live
+notes: Jev and other decision/chat models vs classical arms, measured latency, shield off and on.
+suite:
+  name: live-range
+  n: 60
+  base_seed: 20000
+  budget_min_s: 0.4   # a ~0.5 s decision layer has a fair chance in 0.4-4 s budgets
+  budget_max_s: 4.0
+  mix: {obstacle_static: 0.4, obstacle_approach: 0.3, intruder_cross: 0.2, battery_critical: 0.05, gps_loss: 0.05}
+  n_impossible: 0
+latency_sweep_ms: []
+shield: [0, 1]
+cadence: [sequential]
+reps: 1
+arms:
+  - {id: fsm, kind: fsm, sweep: false, measured: true, subsample: 60}
+  - {id: reflex_ttc, kind: reflex_ttc, sweep: false, measured: true, subsample: 60}
+  - {id: oracle, kind: oracle, sweep: false, measured: true, subsample: 60}
+  - id: jev
+    provider: decisions_endpoint
+    model: typesafe/jev-1.13
+    pool: api
+    sweep: false
+    measured: true
+    subsample: 60
+  - id: mercury
+    provider: decisions_endpoint
+    model: inception/mercury-decide:free
+    pool: api
+    sweep: false
+    measured: true
+    subsample: 60
+  - id: gpt-4o-mini
+    provider: openai_chat
+    model: gpt-4o-mini
+    pool: api
+    config: {top_logprobs: 20}
+    sweep: false
+    measured: true
+    subsample: 60
+  - id: gpt-6-luna
+    provider: openai_chat
+    model: gpt-6-luna
+    pool: api
+    config: {reasoning_effort: none, top_logprobs: 5, max_completion_tokens: 16}
+    sweep: false
+    measured: true
+    subsample: 60
+  - id: gemini-flash-lite
+    provider: gemini
+    model: gemini-3.5-flash-lite
+    pool: api
+    config: {thinking_level: minimal, max_output_tokens: 16}
+    sweep: false
+    measured: true
+    subsample: 60

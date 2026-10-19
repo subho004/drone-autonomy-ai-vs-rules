@@ -1,0 +1,44 @@
+# A6: the same extrapolation against a steering intruder.
+name: sim_ghost_pursuit
+notes: 'A6: the same extrapolation against a steering intruder.'
+suite:
+  name: pursuit
+  kind: pursuit
+  n: 24
+  base_seed: 5300
+latency_sweep_ms:
+- 200
+- 400
+- 700
+shield:
+- 0
+cadence:
+- sequential
+reps: 1
+arms:
+- id: fsm
+  kind: fsm
+  measured: false
+- id: predict_fsm_200
+  kind: predict_fsm
+  config:
+    expected_ms: 200
+  measured: false
+- id: predict_fsm_400
+  kind: predict_fsm
+  config:
+    expected_ms: 400
+  measured: false
+- id: predict_fsm_700
+  kind: predict_fsm
+  config:
+    expected_ms: 700
+  measured: false
+- id: reflex_ttc
+  kind: reflex_ttc
+  measured: false
+- id: predict_reflex_ttc_400
+  kind: predict_reflex_ttc
+  config:
+    expected_ms: 400
+  measured: false

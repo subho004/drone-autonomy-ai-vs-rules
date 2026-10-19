@@ -1,0 +1,30 @@
+{
+  "scenario_seed": 5212,
+  "frames": 622,
+  "sides": [
+    {
+      "flight_id": 18469,
+      "label": "zone-aware pilot, 0 ms",
+      "outcome": "landed_on_pad",
+      "success": true,
+      "task": {
+        "max_breach_m": 0.0,
+        "breach_time_s": 0.0,
+        "breach_count": 0.0,
+        "geofence_overrides": 0
+      }
+    },
+    {
+      "flight_id": 18757,
+      "label": "zone-blind pilot, 0 ms",
+      "outcome": "landed_on_pad",
+      "success": false,
+      "task": {
+        "max_breach_m": 0.49558531378372944,
+        "breach_time_s": 3.3333333333333397,
+        "breach_count": 2.0,
+        "geofence_overrides": 0
+      }
+    }
+  ]
+}

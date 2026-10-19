@@ -1,0 +1,5 @@
+# Everything needed to run, test and analyse the project.
+# pybullet + gym-pybullet-drones are NOT here: run `bash scripts/setup_sim_env.sh` after installing.
+-r requirements/dev.txt
+-r requirements/sim.txt
+-r requirements/analysis.txt

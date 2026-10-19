@@ -1,0 +1,118 @@
+Yes. Given your M4 MacBook Pro with 16 GB RAM, I’d keep this much lighter than AirSim/Unreal.
+
+My pick: gym-pybullet-drones
+
+⁠gym-pybullet-drones GitHub
+
+This is a very good fit because the current maintained version explicitly lists Apple Silicon/macOS 26 as tested. It is also a minimalist PyBullet-based simulator rather than a huge game-engine stack.
+
+It already provides:
+
+* quadrotor physics
+* single and multi-drone simulation
+* obstacles
+* RGB/depth/segmentation sensors
+* PID controllers
+* velocity control
+* fully steppable physics
+* Gymnasium interface
+* examples you can modify directly
+
+And importantly, the underlying simulator can run much faster than real time. The project reports ~20 kHz PyBullet physics updates when parallelizing 80 drones across 4 environments.
+
+That makes it unusually suitable for demonstrating Jev’s low-latency decision making.
+
+I’d structure your project like this
+
+                 PyBullet
+                    │
+             Drone environment
+                    │
+        ┌───────────┴───────────┐
+        │                       │
+     Sensors                World state
+        │                       │
+        └───────────┬───────────┘
+                    ↓
+                  JEV
+                    ↓
+          ┌─────────┴─────────┐
+          ↓                   ↓
+      navigation          emergency
+       decision             action
+          ↓                   ↓
+       controller ←───────────┘
+          ↓
+       motor/RPM
+          ↓
+        Drone
+
+The important distinction is that Jev shouldn’t directly replace the low-level motor controller.
+
+I’d let a normal PID/MPC controller handle continuous stabilization, while Jev handles the fast discrete decisions:
+
+Jev actions:
+FORWARD
+LEFT
+RIGHT
+ASCEND
+DESCEND
+BRAKE
+HOVER
+AVOID_LEFT
+AVOID_RIGHT
+RETURN_HOME
+EMERGENCY_LAND
+
+That gives you a much cleaner experiment.
+
+Then make the environment adversarial
+
+Start with:
+
+Waypoint
+   ↓
+Drone
+
+Then introduce events at random times:
+
+obstacle suddenly appears
+wind changes
+target moves
+sensor becomes noisy
+battery drops
+GPS disappears
+another drone enters trajectory
+
+Jev gets the state and has to react.
+
+The killer demo would be something like:
+
+                    Reaction latency
+PID/MPC             ─────────────
+Jev                 ───
+LLM                  ─────────────────────────
+
+and show the drone avoiding an obstacle that appears unexpectedly.
+
+Don’t start with Webots
+
+Webots is also available on macOS and has a good drone simulation project with GPS, IMU, gyroscope, compass, camera, wind and obstacle navigation.
+
+But for your specific Jev experiment, PyBullet is preferable because you don’t need a visually impressive simulator. You want to maximize:
+
+simulation speed × number of decisions × environmental changes.
+
+You could run thousands of simulated flights on your Mac and collect:
+
+decision_latency
+collision_rate
+time_to_target
+path_length
+recovery_time
+decisions/sec
+simulation_speed
+
+Then compare Jev vs PID vs a conventional policy vs a slower model.
+
+That’s a substantially more interesting project than simply making a drone fly around a 3D map.

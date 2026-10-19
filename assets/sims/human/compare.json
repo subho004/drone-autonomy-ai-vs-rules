@@ -1,0 +1,27 @@
+{
+  "scenario_seed": 20028,
+  "frames": 264,
+  "sides": [
+    {
+      "flight_id": 20737,
+      "label": "reflex machine, 0 ms",
+      "outcome": "success",
+      "success": true,
+      "task": {}
+    },
+    {
+      "flight_id": 21099,
+      "label": "human-like, median 300 ms",
+      "outcome": "success",
+      "success": true,
+      "task": {}
+    },
+    {
+      "flight_id": 17513,
+      "label": "Jev, measured ~600 ms",
+      "outcome": "collision",
+      "success": false,
+      "task": {}
+    }
+  ]
+}

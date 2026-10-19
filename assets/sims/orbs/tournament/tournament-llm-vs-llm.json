@@ -1,0 +1,20 @@
+[
+  {
+    "flight": "T_mercury_llm_s9009",
+    "label": "drone 511 ms | gpt-4o-mini orbs (678 ms)",
+    "outcome": "landed_on_pad",
+    "success": true
+  },
+  {
+    "flight": "T_mercury_llm-gemini_s9009",
+    "label": "drone 474 ms | Gemini-Lite orbs",
+    "outcome": "collision",
+    "success": false
+  },
+  {
+    "flight": "T_jev_llm_s9009",
+    "label": "drone 549 ms | gpt-4o-mini orbs (717 ms)",
+    "outcome": "crash",
+    "success": false
+  }
+]

@@ -1,0 +1,102 @@
+[
+  {
+    "arm": "follow_pilot",
+    "shield": 0,
+    "n": 12,
+    "success": 1.0,
+    "successes": 12,
+    "lo": 0.7575059933447592,
+    "hi": 1.0,
+    "collision": 0.0,
+    "metric": "in_band_frac",
+    "metric_mean": 1.0,
+    "latency_ms": 0.0007224141186008802,
+    "cost_usd": 0.0,
+    "outcomes": {
+      "completed": 12
+    }
+  },
+  {
+    "arm": "gemini-flash-lite",
+    "shield": 0,
+    "n": 12,
+    "success": 0.25,
+    "successes": 3,
+    "lo": 0.08894166839405471,
+    "hi": 0.5323053349335657,
+    "collision": 0.0,
+    "metric": "in_band_frac",
+    "metric_mean": 0.7332802071565022,
+    "latency_ms": 1017.4360726431182,
+    "cost_usd": 0.0187423,
+    "outcomes": {
+      "completed": 3,
+      "lost": 7,
+      "overran": 2
+    },
+    "pilot_only": 9,
+    "model_only": 0,
+    "p_vs_pilot": 0.00390625
+  },
+  {
+    "arm": "gpt-4o-mini",
+    "shield": 0,
+    "n": 12,
+    "success": 0.0,
+    "successes": 0,
+    "lo": 2.7755575615628914e-17,
+    "hi": 0.24249400665524085,
+    "collision": 0.0,
+    "metric": "in_band_frac",
+    "metric_mean": 0.6247700339894506,
+    "latency_ms": 660.0165047599853,
+    "cost_usd": 0.019707449999999998,
+    "outcomes": {
+      "lost": 12
+    },
+    "pilot_only": 12,
+    "model_only": 0,
+    "p_vs_pilot": 0.00048828125
+  },
+  {
+    "arm": "jev",
+    "shield": 0,
+    "n": 12,
+    "success": 0.6666666666666666,
+    "successes": 8,
+    "lo": 0.39062208887279953,
+    "hi": 0.8618799089087867,
+    "collision": 0.0,
+    "metric": "in_band_frac",
+    "metric_mean": 0.8644161652855313,
+    "latency_ms": 536.4367229009955,
+    "cost_usd": 0.034847694000000026,
+    "outcomes": {
+      "completed": 8,
+      "lost": 4
+    },
+    "pilot_only": 4,
+    "model_only": 0,
+    "p_vs_pilot": 0.125
+  },
+  {
+    "arm": "mercury",
+    "shield": 0,
+    "n": 12,
+    "success": 1.0,
+    "successes": 12,
+    "lo": 0.7575059933447592,
+    "hi": 1.0,
+    "collision": 0.0,
+    "metric": "in_band_frac",
+    "metric_mean": 0.9049189814814849,
+    "latency_ms": 508.02416643672103,
+    "cost_usd": 0.0,
+    "outcomes": {
+      "completed": 12
+    },
+    "pilot_only": 0,
+    "model_only": 0,
+    "p_vs_pilot": 1.0
+  }
+]

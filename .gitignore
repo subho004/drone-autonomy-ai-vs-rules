@@ -1,0 +1,27 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Tooling caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Virtual environments
+.venv
+.env
+
+# Local artefacts (data, reports and databases are committed; SQLite's transient
+# WAL/SHM files and macOS metadata are not)
+*.db-wal
+*.db-shm
+.DS_Store
+
+logs/
+
+# LinkedIn post drafts and collage (local only)
+linkedin/

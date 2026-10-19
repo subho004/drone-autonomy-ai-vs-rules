@@ -1,0 +1,110 @@
+{
+  "constant_velocity": [
+    {
+      "arm": "predict_fsm_200",
+      "raw": "fsm",
+      "latency_ms": 200,
+      "n": 56,
+      "predictive_collision": 0.14285714285714285,
+      "raw_collision": 0.14285714285714285,
+      "predictive_only": 0,
+      "raw_only": 0,
+      "p": 1.0,
+      "predictive_collisions_under_budget": 0,
+      "predictive_collisions": 8
+    },
+    {
+      "arm": "predict_fsm_400",
+      "raw": "fsm",
+      "latency_ms": 400,
+      "n": 56,
+      "predictive_collision": 0.32142857142857145,
+      "raw_collision": 0.30357142857142855,
+      "predictive_only": 3,
+      "raw_only": 2,
+      "p": 1.0,
+      "predictive_collisions_under_budget": 0,
+      "predictive_collisions": 18
+    },
+    {
+      "arm": "predict_fsm_700",
+      "raw": "fsm",
+      "latency_ms": 700,
+      "n": 56,
+      "predictive_collision": 0.5535714285714286,
+      "raw_collision": 0.6071428571428571,
+      "predictive_only": 4,
+      "raw_only": 7,
+      "p": 0.548828125,
+      "predictive_collisions_under_budget": 12,
+      "predictive_collisions": 31
+    },
+    {
+      "arm": "predict_reflex_ttc_400",
+      "raw": "reflex_ttc",
+      "latency_ms": 400,
+      "n": 56,
+      "predictive_collision": 0.26785714285714285,
+      "raw_collision": 0.26785714285714285,
+      "predictive_only": 0,
+      "raw_only": 0,
+      "p": 1.0,
+      "predictive_collisions_under_budget": 0,
+      "predictive_collisions": 15
+    }
+  ],
+  "steering": [
+    {
+      "arm": "predict_fsm_200",
+      "raw": "fsm",
+      "latency_ms": 200,
+      "n": 24,
+      "predictive_collision": 0.8333333333333334,
+      "raw_collision": 0.75,
+      "predictive_only": 2,
+      "raw_only": 0,
+      "p": 0.5,
+      "predictive_collisions_under_budget": 0,
+      "predictive_collisions": 20
+    },
+    {
+      "arm": "predict_fsm_400",
+      "raw": "fsm",
+      "latency_ms": 400,
+      "n": 24,
+      "predictive_collision": 0.875,
+      "raw_collision": 0.875,
+      "predictive_only": 0,
+      "raw_only": 0,
+      "p": 1.0,
+      "predictive_collisions_under_budget": 0,
+      "predictive_collisions": 21
+    },
+    {
+      "arm": "predict_fsm_700",
+      "raw": "fsm",
+      "latency_ms": 700,
+      "n": 24,
+      "predictive_collision": 0.9583333333333334,
+      "raw_collision": 0.875,
+      "predictive_only": 2,
+      "raw_only": 0,
+      "p": 0.5,
+      "predictive_collisions_under_budget": 0,
+      "predictive_collisions": 23
+    },
+    {
+      "arm": "predict_reflex_ttc_400",
+      "raw": "reflex_ttc",
+      "latency_ms": 400,
+      "n": 24,
+      "predictive_collision": 0.8333333333333334,
+      "raw_collision": 0.8333333333333334,
+      "predictive_only": 0,
+      "raw_only": 0,
+      "p": 1.0,
+      "predictive_collisions_under_budget": 0,
+      "predictive_collisions": 20
+    }
+  ]
+}

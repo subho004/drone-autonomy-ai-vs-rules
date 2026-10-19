@@ -1,0 +1,3186 @@
+{
+ "meta": {
+  "date": "2026-10-17",
+  "client": "India (IST), Cloudflare edge MAA/HYD, HTTP/2 httpx 0.28.1, sequential, 350ms pause, 3 warm-up discarded",
+  "scenarios": 8,
+  "total_spend_usd_est": 0.011,
+  "total_calls_approx": 305
+ },
+ "main": {
+  "typesafe/jev-1.13": {
+   "n_calls_total": 27,
+   "n": 24,
+   "errors": 0,
+   "p50": 530.579625,
+   "p95": 961.356083,
+   "max": 2502.130791,
+   "min": 445.719625,
+   "acc": 0.75,
+   "n_acc_correct": 18,
+   "probs_returned": true,
+   "spend_usd_est": 0.0009501240000000001,
+   "aborted": null,
+   "sample_hdr": {
+    "cf-ray": "a4c1223cad0fb2a9-MAA"
+   },
+   "model_id": "typesafe/jev-1.13-20260917",
+   "provider": "TypeSafe",
+   "statuses": [
+    200
+   ],
+   "per_call": [
+    {
+     "sc": "clear_path",
+     "ms": 2287.3,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": true,
+     "top": 1,
+     "toks": [
+      830,
+      110
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 1097.6,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": true,
+     "top": 0.97,
+     "toks": [
+      849,
+      110
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 484.6,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": true,
+     "top": 0.92,
+     "toks": [
+      855,
+      110
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 605.2,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 1,
+     "toks": [
+      830,
+      110
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 487.2,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.97,
+     "toks": [
+      849,
+      110
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 961.4,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.93,
+     "toks": [
+      855,
+      110
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 530.6,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.95,
+     "toks": [
+      853,
+      110
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 450.4,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.99,
+     "toks": [
+      829,
+      110
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 597.9,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 1,
+     "toks": [
+      830,
+      110
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 615.3,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 1,
+     "toks": [
+      818,
+      110
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 529.9,
+     "st": 200,
+     "act": "HOVER",
+     "ok": true,
+     "warm": false,
+     "top": 0.59,
+     "toks": [
+      832,
+      110
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 445.7,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 1,
+     "toks": [
+      830,
+      110
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 585.0,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.96,
+     "toks": [
+      849,
+      110
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 465.2,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.9,
+     "toks": [
+      855,
+      110
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 524.1,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.92,
+     "toks": [
+      853,
+      110
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 571.3,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.99,
+     "toks": [
+      829,
+      110
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 496.2,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.99,
+     "toks": [
+      830,
+      110
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 621.3,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 1,
+     "toks": [
+      818,
+      110
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 525.6,
+     "st": 200,
+     "act": "HOVER",
+     "ok": true,
+     "warm": false,
+     "top": 0.65,
+     "toks": [
+      832,
+      110
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 611.2,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 1,
+     "toks": [
+      830,
+      110
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 522.7,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.97,
+     "toks": [
+      849,
+      110
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 470.0,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.92,
+     "toks": [
+      855,
+      110
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 561.3,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.93,
+     "toks": [
+      853,
+      110
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 693.4,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.99,
+     "toks": [
+      829,
+      110
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 496.4,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 1,
+     "toks": [
+      830,
+      110
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 2502.1,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 1,
+     "toks": [
+      818,
+      110
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 485.9,
+     "st": 200,
+     "act": "HOVER",
+     "ok": true,
+     "warm": false,
+     "top": 0.71,
+     "toks": [
+      832,
+      110
+     ]
+    }
+   ]
+  },
+  "inception/mercury-decide:free": {
+   "n_calls_total": 27,
+   "n": 24,
+   "errors": 0,
+   "p50": 452.778834,
+   "p95": 810.815708,
+   "max": 836.311166,
+   "min": 380.871833,
+   "acc": 1.0,
+   "n_acc_correct": 24,
+   "probs_returned": true,
+   "spend_usd_est": 0.0,
+   "aborted": null,
+   "sample_hdr": {
+    "cf-ray": "a4c122e75897b2a9-MAA"
+   },
+   "model_id": "inception/mercury-decide-20260930",
+   "provider": "Inception",
+   "statuses": [
+    200
+   ],
+   "per_call": [
+    {
+     "sc": "clear_path",
+     "ms": 759.8,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": true,
+     "top": 1.0,
+     "toks": [
+      597,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 431.7,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": true,
+     "top": 0.977,
+     "toks": [
+      617,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 589.3,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": true,
+     "top": 0.987,
+     "toks": [
+      631,
+      1
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 476.8,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      597,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 458.2,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.987,
+     "toks": [
+      603,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 836.3,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.989,
+     "toks": [
+      630,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 499.8,
+     "st": 200,
+     "act": "AVOID_RIGHT",
+     "ok": true,
+     "warm": false,
+     "top": 0.753,
+     "toks": [
+      627,
+      1
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 517.9,
+     "st": 200,
+     "act": "EMERGENCY_LAND",
+     "ok": true,
+     "warm": false,
+     "top": 0.588,
+     "toks": [
+      596,
+      1
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 453.0,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.994,
+     "toks": [
+      587,
+      1
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 526.3,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      573,
+      1
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 443.2,
+     "st": 200,
+     "act": "HOVER",
+     "ok": true,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      582,
+      1
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 434.0,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      604,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 439.9,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.977,
+     "toks": [
+      617,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 810.8,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.991,
+     "toks": [
+      631,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 426.6,
+     "st": 200,
+     "act": "AVOID_RIGHT",
+     "ok": true,
+     "warm": false,
+     "top": 0.852,
+     "toks": [
+      607,
+      1
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 442.5,
+     "st": 200,
+     "act": "EMERGENCY_LAND",
+     "ok": true,
+     "warm": false,
+     "top": 0.62,
+     "toks": [
+      595,
+      1
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 380.9,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.997,
+     "toks": [
+      601,
+      1
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 611.3,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      573,
+      1
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 442.9,
+     "st": 200,
+     "act": "HOVER",
+     "ok": true,
+     "warm": false,
+     "top": 0.999,
+     "toks": [
+      582,
+      1
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 767.1,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      604,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 398.6,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.977,
+     "toks": [
+      617,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 452.8,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.987,
+     "toks": [
+      628,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 387.6,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.681,
+     "toks": [
+      617,
+      1
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 381.9,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.868,
+     "toks": [
+      598,
+      1
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 453.5,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.997,
+     "toks": [
+      607,
+      1
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 416.3,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      577,
+      1
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 447.4,
+     "st": 200,
+     "act": "HOVER",
+     "ok": true,
+     "warm": false,
+     "top": 0.997,
+     "toks": [
+      582,
+      1
+     ]
+    }
+   ]
+  },
+  "cloudflare/clef-flash": {
+   "n_calls_total": 27,
+   "n": 24,
+   "errors": 0,
+   "p50": 619.970167,
+   "p95": 1111.0745,
+   "max": 1470.271542,
+   "min": 537.065625,
+   "acc": 0.625,
+   "n_acc_correct": 15,
+   "probs_returned": true,
+   "spend_usd_est": 0.000512902,
+   "aborted": null,
+   "sample_hdr": {
+    "cf-ray": "a4c123789d30b2a9-MAA"
+   },
+   "model_id": "cloudflare/clef-flash",
+   "provider": "Cloudflare",
+   "statuses": [
+    200
+   ],
+   "per_call": [
+    {
+     "sc": "clear_path",
+     "ms": 2286.6,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": true,
+     "top": 0.878,
+     "toks": [
+      673,
+      0
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 1322.9,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": true,
+     "top": 0.299,
+     "toks": [
+      692,
+      0
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 617.4,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": true,
+     "top": 0.327,
+     "toks": [
+      698,
+      0
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 1470.3,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 0.901,
+     "toks": [
+      673,
+      0
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 614.9,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.299,
+     "toks": [
+      692,
+      0
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 1111.1,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.406,
+     "toks": [
+      698,
+      0
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 662.4,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.392,
+     "toks": [
+      696,
+      0
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 618.6,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.733,
+     "toks": [
+      672,
+      0
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 1055.1,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.896,
+     "toks": [
+      673,
+      0
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 551.7,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.72,
+     "toks": [
+      660,
+      0
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 559.1,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.869,
+     "toks": [
+      675,
+      0
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 613.0,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 0.901,
+     "toks": [
+      673,
+      0
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 566.1,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.299,
+     "toks": [
+      692,
+      0
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 1087.8,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.406,
+     "toks": [
+      698,
+      0
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 570.8,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.392,
+     "toks": [
+      696,
+      0
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 595.4,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.733,
+     "toks": [
+      672,
+      0
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 653.8,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.897,
+     "toks": [
+      673,
+      0
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 537.1,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.713,
+     "toks": [
+      660,
+      0
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 572.5,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.869,
+     "toks": [
+      675,
+      0
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 1071.7,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 0.901,
+     "toks": [
+      673,
+      0
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 670.8,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.299,
+     "toks": [
+      692,
+      0
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 620.0,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.412,
+     "toks": [
+      698,
+      0
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 695.6,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.392,
+     "toks": [
+      696,
+      0
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 1063.4,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.741,
+     "toks": [
+      672,
+      0
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 543.5,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.897,
+     "toks": [
+      673,
+      0
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 600.4,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.72,
+     "toks": [
+      660,
+      0
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 1096.3,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.8,
+     "toks": [
+      675,
+      0
+     ]
+    }
+   ]
+  },
+  "togethercomputer/tev1-4b-experimental": {
+   "n_calls_total": 27,
+   "n": 24,
+   "errors": 0,
+   "p50": 520.945792,
+   "p95": 607.838709,
+   "max": 625.574333,
+   "min": 505.51925,
+   "acc": 0.5,
+   "n_acc_correct": 12,
+   "probs_returned": true,
+   "spend_usd_est": 0.0006948480000000001,
+   "aborted": null,
+   "sample_hdr": {
+    "cf-ray": "a4c124407806b2a9-MAA"
+   },
+   "model_id": "togethercomputer/tev1-4b-experimental-20260923",
+   "provider": "Together",
+   "statuses": [
+    200
+   ],
+   "per_call": [
+    {
+     "sc": "clear_path",
+     "ms": 765.9,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": true,
+     "top": 0.998,
+     "toks": [
+      605,
+      2
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 515.7,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": true,
+     "top": 0.501,
+     "toks": [
+      624,
+      2
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 803.7,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": true,
+     "top": 0.358,
+     "toks": [
+      630,
+      2
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 520.6,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      605,
+      2
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 530.5,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.522,
+     "toks": [
+      624,
+      2
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 536.2,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.346,
+     "toks": [
+      630,
+      2
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 520.5,
+     "st": 200,
+     "act": "AVOID_RIGHT",
+     "ok": true,
+     "warm": false,
+     "top": 0.392,
+     "toks": [
+      628,
+      2
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 535.0,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.997,
+     "toks": [
+      604,
+      2
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 551.6,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      605,
+      2
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 518.7,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.891,
+     "toks": [
+      592,
+      2
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 516.5,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.809,
+     "toks": [
+      607,
+      2
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 520.9,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      605,
+      2
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 518.1,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.522,
+     "toks": [
+      624,
+      2
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 531.3,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.358,
+     "toks": [
+      630,
+      2
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 516.9,
+     "st": 200,
+     "act": "AVOID_RIGHT",
+     "ok": true,
+     "warm": false,
+     "top": 0.422,
+     "toks": [
+      628,
+      2
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 518.3,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.997,
+     "toks": [
+      604,
+      2
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 516.8,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      605,
+      2
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 522.9,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.891,
+     "toks": [
+      592,
+      2
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 528.7,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.809,
+     "toks": [
+      607,
+      2
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 555.9,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      605,
+      2
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 510.1,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.501,
+     "toks": [
+      624,
+      2
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 592.0,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.358,
+     "toks": [
+      630,
+      2
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 505.5,
+     "st": 200,
+     "act": "AVOID_RIGHT",
+     "ok": true,
+     "warm": false,
+     "top": 0.392,
+     "toks": [
+      628,
+      2
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 515.4,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.997,
+     "toks": [
+      604,
+      2
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 625.6,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      605,
+      2
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 607.8,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.891,
+     "toks": [
+      592,
+      2
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 509.6,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.81,
+     "toks": [
+      607,
+      2
+     ]
+    }
+   ]
+  },
+  "openai/gpt-4o-mini": {
+   "n_calls_total": 27,
+   "n": 24,
+   "errors": 0,
+   "p50": 688.134416,
+   "p95": 1028.415542,
+   "max": 2565.5345,
+   "min": 620.542459,
+   "acc": 0.75,
+   "n_acc_correct": 18,
+   "probs_returned": true,
+   "spend_usd_est": 0.00196575,
+   "aborted": null,
+   "sample_hdr": {
+    "cf-ray": "a4c124dd28515b77-MAA",
+    "openai-processing-ms": "400",
+    "x-ratelimit-limit-requests": "30000",
+    "x-ratelimit-limit-tokens": "150000000",
+    "x-ratelimit-remaining-requests": "29999",
+    "x-ratelimit-remaining-tokens": "149999630",
+    "x-ratelimit-reset-requests": "2ms",
+    "x-ratelimit-reset-tokens": "0s",
+    "x-request-id": "req_bfb3004b92cc4378b2077634d4d848f8"
+   },
+   "model_id": "gpt-4o-mini-2024-07-18",
+   "provider": null,
+   "statuses": [
+    200
+   ],
+   "per_call": [
+    {
+     "sc": "clear_path",
+     "ms": 1923.2,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": true,
+     "top": 1.0,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 726.4,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": true,
+     "top": 1.0,
+     "toks": [
+      494,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 669.8,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": true,
+     "top": 0.986,
+     "toks": [
+      499,
+      1
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 688.1,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 913.2,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      494,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 660.4,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.986,
+     "toks": [
+      499,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 1028.4,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.986,
+     "toks": [
+      498,
+      1
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 723.0,
+     "st": 200,
+     "act": "EMERGENCY_LAND",
+     "ok": true,
+     "warm": false,
+     "top": 0.969,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 671.4,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 684.7,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      461,
+      1
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 2565.5,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.777,
+     "toks": [
+      476,
+      1
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 732.0,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 753.7,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      494,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 712.7,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.986,
+     "toks": [
+      499,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 665.7,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.991,
+     "toks": [
+      498,
+      1
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 673.0,
+     "st": 200,
+     "act": "EMERGENCY_LAND",
+     "ok": true,
+     "warm": false,
+     "top": 0.951,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 629.1,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 716.8,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.981,
+     "toks": [
+      461,
+      1
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 707.9,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.562,
+     "toks": [
+      476,
+      1
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 677.5,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 718.7,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      494,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 621.1,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.986,
+     "toks": [
+      499,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 620.5,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.986,
+     "toks": [
+      498,
+      1
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 685.1,
+     "st": 200,
+     "act": "EMERGENCY_LAND",
+     "ok": true,
+     "warm": false,
+     "top": 0.951,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 680.2,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 643.3,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.997,
+     "toks": [
+      461,
+      1
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 735.9,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.971,
+     "toks": [
+      476,
+      1
+     ]
+    }
+   ]
+  },
+  "openai/gpt-4.1-nano": {
+   "n_calls_total": 27,
+   "n": 24,
+   "errors": 0,
+   "p50": 628.211292,
+   "p95": 705.5525,
+   "max": 947.626541,
+   "min": 559.048417,
+   "acc": 0.625,
+   "n_acc_correct": 15,
+   "probs_returned": true,
+   "spend_usd_est": 0.0013105000000000005,
+   "aborted": null,
+   "sample_hdr": {
+    "cf-ray": "a4c125a019ae5b77-MAA",
+    "openai-processing-ms": "267",
+    "x-ratelimit-limit-requests": "30000",
+    "x-ratelimit-limit-tokens": "150000000",
+    "x-ratelimit-remaining-requests": "29999",
+    "x-ratelimit-remaining-tokens": "149999630",
+    "x-ratelimit-reset-requests": "2ms",
+    "x-ratelimit-reset-tokens": "0s",
+    "x-request-id": "req_9828992d3935412ba306e34c084b68f2"
+   },
+   "model_id": "gpt-4.1-nano-2025-04-14",
+   "provider": null,
+   "statuses": [
+    200
+   ],
+   "per_call": [
+    {
+     "sc": "clear_path",
+     "ms": 591.7,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": true,
+     "top": 0.91,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 632.6,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": true,
+     "top": 0.99,
+     "toks": [
+      494,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 695.4,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": true,
+     "top": 0.994,
+     "toks": [
+      499,
+      1
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 598.6,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 0.806,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 613.5,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.995,
+     "toks": [
+      494,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 627.2,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      499,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 683.2,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.999,
+     "toks": [
+      498,
+      1
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 666.5,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.278,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 597.7,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.768,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 593.2,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.881,
+     "toks": [
+      461,
+      1
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 649.2,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.707,
+     "toks": [
+      476,
+      1
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 604.5,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 0.843,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 631.6,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.995,
+     "toks": [
+      494,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 591.3,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      499,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 598.3,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.999,
+     "toks": [
+      498,
+      1
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 605.3,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": false,
+     "warm": false,
+     "top": 0.279,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 688.8,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.537,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 672.0,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.881,
+     "toks": [
+      461,
+      1
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 665.4,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.707,
+     "toks": [
+      476,
+      1
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 670.6,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 0.806,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 578.8,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.995,
+     "toks": [
+      494,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 628.2,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.998,
+     "toks": [
+      499,
+      1
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 697.4,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      498,
+      1
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 566.6,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.279,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 559.0,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.727,
+     "toks": [
+      472,
+      1
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 705.6,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.881,
+     "toks": [
+      461,
+      1
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 947.6,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": false,
+     "warm": false,
+     "top": 0.707,
+     "toks": [
+      476,
+      1
+     ]
+    }
+   ]
+  },
+  "openai/gpt-6-luna(effort=none)": {
+   "n_calls_total": 27,
+   "n": 24,
+   "errors": 0,
+   "p50": 972.583792,
+   "p95": 1225.461459,
+   "max": 1695.476833,
+   "min": 745.043292,
+   "acc": 0.8333333333333334,
+   "n_acc_correct": 20,
+   "probs_returned": true,
+   "spend_usd_est": 0.0013510000000000002,
+   "aborted": null,
+   "sample_hdr": {
+    "cf-ray": "a4c126485ec95b77-MAA",
+    "openai-processing-ms": "668",
+    "x-ratelimit-limit-requests": "30000",
+    "x-ratelimit-limit-tokens": "180000000",
+    "x-ratelimit-remaining-requests": "29999",
+    "x-ratelimit-remaining-tokens": "179999631",
+    "x-ratelimit-reset-requests": "2ms",
+    "x-ratelimit-reset-tokens": "0s",
+    "x-request-id": "req_bbdd011febe44adf93d162e38a0cc71f"
+   },
+   "model_id": "gpt-6-luna",
+   "provider": null,
+   "statuses": [
+    200
+   ],
+   "per_call": [
+    {
+     "sc": "clear_path",
+     "ms": 1046.6,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": true,
+     "top": 1.0,
+     "toks": [
+      471,
+      4
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 827.0,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": true,
+     "top": 0.476,
+     "toks": [
+      493,
+      4
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 1057.0,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": true,
+     "top": 0.903,
+     "toks": [
+      498,
+      4
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 977.0,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      471,
+      4
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 984.3,
+     "st": 200,
+     "act": "EMERGENCY_LAND",
+     "ok": false,
+     "warm": false,
+     "top": 0.473,
+     "toks": [
+      493,
+      4
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 1695.5,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.722,
+     "toks": [
+      498,
+      4
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 1077.2,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": false,
+     "warm": false,
+     "top": 0.584,
+     "toks": [
+      497,
+      4
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 830.5,
+     "st": 200,
+     "act": "EMERGENCY_LAND",
+     "ok": true,
+     "warm": false,
+     "top": 0.992,
+     "toks": [
+      471,
+      4
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 1152.1,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.999,
+     "toks": [
+      471,
+      4
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 1006.9,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      460,
+      4
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 840.9,
+     "st": 200,
+     "act": "HOVER",
+     "ok": true,
+     "warm": false,
+     "top": 0.994,
+     "toks": [
+      475,
+      4
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 1027.6,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      471,
+      4
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 745.0,
+     "st": 200,
+     "act": "RIGHT",
+     "ok": false,
+     "warm": false,
+     "top": 0.381,
+     "toks": [
+      493,
+      4
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 972.6,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.605,
+     "toks": [
+      498,
+      4
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 1225.5,
+     "st": 200,
+     "act": "AVOID_RIGHT",
+     "ok": true,
+     "warm": false,
+     "top": 0.567,
+     "toks": [
+      497,
+      4
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 941.3,
+     "st": 200,
+     "act": "EMERGENCY_LAND",
+     "ok": true,
+     "warm": false,
+     "top": 0.99,
+     "toks": [
+      471,
+      4
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 934.0,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      471,
+      4
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 923.1,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 0.999,
+     "toks": [
+      460,
+      4
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 881.3,
+     "st": 200,
+     "act": "HOVER",
+     "ok": true,
+     "warm": false,
+     "top": 0.996,
+     "toks": [
+      475,
+      4
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 1012.3,
+     "st": 200,
+     "act": "FORWARD",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      471,
+      4
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 765.4,
+     "st": 200,
+     "act": "BRAKE",
+     "ok": true,
+     "warm": false,
+     "top": 0.473,
+     "toks": [
+      493,
+      4
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 961.2,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": true,
+     "warm": false,
+     "top": 0.582,
+     "toks": [
+      498,
+      4
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 945.5,
+     "st": 200,
+     "act": "AVOID_LEFT",
+     "ok": false,
+     "warm": false,
+     "top": 0.526,
+     "toks": [
+      497,
+      4
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 1143.6,
+     "st": 200,
+     "act": "EMERGENCY_LAND",
+     "ok": true,
+     "warm": false,
+     "top": 0.992,
+     "toks": [
+      471,
+      4
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 917.3,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      471,
+      4
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 1218.3,
+     "st": 200,
+     "act": "RETURN_HOME",
+     "ok": true,
+     "warm": false,
+     "top": 1.0,
+     "toks": [
+      460,
+      4
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 816.2,
+     "st": 200,
+     "act": "HOVER",
+     "ok": true,
+     "warm": false,
+     "top": 0.991,
+     "toks": [
+      475,
+      4
+     ]
+    }
+   ]
+  },
+  "google/gemini-3.5-flash-lite(think=minimal)": {
+   "n_calls_total": 27,
+   "n": 24,
+   "errors": 0,
+   "p50": 940.962417,
+   "p95": 1221.984625,
+   "max": 1222.642125,
+   "min": 662.822916,
+   "acc": 0.0,
+   "n_acc_correct": 0,
+   "probs_returned": false,
+   "spend_usd_est": 0.0013483,
+   "aborted": null,
+   "sample_hdr": {
+    "server-timing": "gfet4t7; dur=1028"
+   },
+   "model_id": "gemini-3.5-flash-lite",
+   "provider": null,
+   "statuses": [
+    200
+   ],
+   "per_call": [
+    {
+     "sc": "clear_path",
+     "ms": 1175.5,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": true,
+     "top": null,
+     "toks": [
+      492,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 940.2,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": true,
+     "top": null,
+     "toks": [
+      511,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 892.3,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": true,
+     "top": null,
+     "toks": [
+      516,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 1216.1,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      492,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 1222.0,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      511,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 801.2,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      516,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 779.0,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      515,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 1026.0,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      491,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 774.3,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      492,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 1146.5,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      477,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 701.3,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      494,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 1052.4,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      492,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 941.0,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      511,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 805.8,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      516,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 712.3,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      515,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 662.8,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      491,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 668.0,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      492,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 1056.9,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      477,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 1222.6,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      494,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "clear_path",
+     "ms": 991.8,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      492,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "obstacle_dead_ahead_ttc0.5",
+     "ms": 1009.2,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      511,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "obstacle_right_left_free",
+     "ms": 758.9,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      516,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "obstacle_left_right_free",
+     "ms": 1066.9,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      515,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "battery_critical_5pct",
+     "ms": 757.2,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      491,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "battery_low_18pct",
+     "ms": 861.2,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      492,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "gps_lost",
+     "ms": 674.9,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      477,
+      null,
+      null
+     ]
+    },
+    {
+     "sc": "at_target_hover",
+     "ms": 1025.7,
+     "st": 200,
+     "act": null,
+     "ok": false,
+     "warm": false,
+     "top": null,
+     "toks": [
+      494,
+      null,
+      null
+     ]
+    }
+   ],
+   "INVALID_NOTE": "maxOutputTokens=4 returned empty content (finishReason MAX_TOKENS); accuracy 0 is an artifact. Valid rerun with maxOutputTokens=16 is in extra.gemini"
+  }
+ },
+ "extra": {
+  "gemini": {
+   "n": 24,
+   "errors": 0,
+   "p50": 801.299625,
+   "p95": 1103.717833,
+   "max": 1197.779,
+   "acc": 0.9166666666666666,
+   "wrong": [
+    [
+     "battery_low_18pct",
+     "FORWARD"
+    ],
+    [
+     "battery_low_18pct",
+     "FORWARD"
+    ]
+   ],
+   "cost_assumed": 0.0013591000000000002,
+   "hdr": {
+    "server-timing": "gfet4t7; dur=686"
+   },
+   "per_call_ms": [
+    826,
+    1216,
+    982,
+    1104,
+    1102,
+    880,
+    763,
+    1198,
+    801,
+    833,
+    693,
+    994,
+    726,
+    933,
+    769,
+    800,
+    799,
+    739,
+    1031,
+    678,
+    672,
+    676,
+    935,
+    731,
+    934,
+    881,
+    705
+   ]
+  },
+  "conc4_gpt4omini": {
+   "n": 16,
+   "errors": 0,
+   "p50": 1262.966625,
+   "p95": 1520.895167,
+   "max": 1950.725125,
+   "wall_s": 4.870014083000001,
+   "rps": 3.285411443850233,
+   "statuses": [
+    200
+   ]
+  },
+  "network_baseline": {
+   "openrouter_models_endpoints": {
+    "status": 200,
+    "first_ms": 470.064792,
+    "p50_warm": 52.445375,
+    "min": 49.056833
+   },
+   "openai_models": {
+    "status": 200,
+    "first_ms": 908.337375,
+    "p50_warm": 864.868875,
+    "min": 606.641209
+   },
+   "gemini_models": {
+    "status": 200,
+    "first_ms": 304.939292,
+    "p50_warm": 228.956791,
+    "min": 217.219791
+   }
+  },
+  "jev_battery_flag_variant": [
+   {
+    "sc": "battery_critical_flagged",
+    "ms": 936.01,
+    "act": "EMERGENCY_LAND",
+    "ok": true
+   },
+   {
+    "sc": "battery_critical_flagged",
+    "ms": 491.522458,
+    "act": "EMERGENCY_LAND",
+    "ok": true
+   },
+   {
+    "sc": "battery_critical_flagged",
+    "ms": 558.878958,
+    "act": "EMERGENCY_LAND",
+    "ok": true
+   },
+   {
+    "sc": "battery_low_flagged",
+    "ms": 476.897917,
+    "act": "RETURN_HOME",
+    "ok": true
+   },
+   {
+    "sc": "battery_low_flagged",
+    "ms": 483.854375,
+    "act": "RETURN_HOME",
+    "ok": true
+   },
+   {
+    "sc": "battery_low_flagged",
+    "ms": 524.842,
+    "act": "RETURN_HOME",
+    "ok": true
+   }
+  ]
+ }
+}

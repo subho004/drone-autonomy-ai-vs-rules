@@ -1,0 +1,209 @@
+[
+  {
+    "arm": "gemini-flash-lite",
+    "shield": 0,
+    "n": 12,
+    "success": 0.0,
+    "successes": 0,
+    "lo": 2.7755575615628914e-17,
+    "hi": 0.24249400665524085,
+    "collision": 0.8333333333333334,
+    "metric": "max_breach_m",
+    "metric_mean": 0.41858145111123085,
+    "latency_ms": 1039.276129149971,
+    "cost_usd": 0.028177200000000006,
+    "outcomes": {
+      "crash": 10,
+      "landed_off_pad": 1,
+      "landed_on_pad": 1
+    },
+    "pilot_only": 12,
+    "model_only": 0,
+    "p_vs_pilot": 0.00048828125
+  },
+  {
+    "arm": "gemini-flash-lite",
+    "shield": 1,
+    "n": 12,
+    "success": 0.0,
+    "successes": 0,
+    "lo": 2.7755575615628914e-17,
+    "hi": 0.24249400665524085,
+    "collision": 0.3333333333333333,
+    "metric": "max_breach_m",
+    "metric_mean": 0.014410859263618661,
+    "latency_ms": 960.2590517214272,
+    "cost_usd": 0.0874275,
+    "outcomes": {
+      "timeout": 8,
+      "crash": 4
+    },
+    "pilot_only": 12,
+    "model_only": 0,
+    "p_vs_pilot": 0.00048828125
+  },
+  {
+    "arm": "gpt-4o-mini",
+    "shield": 0,
+    "n": 12,
+    "success": 0.08333333333333333,
+    "successes": 1,
+    "lo": 0.014865094404917095,
+    "hi": 0.35387991114111694,
+    "collision": 0.6666666666666666,
+    "metric": "max_breach_m",
+    "metric_mean": 0.3421979425712463,
+    "latency_ms": 684.0980513200284,
+    "cost_usd": 0.0739971,
+    "outcomes": {
+      "landed_on_pad": 3,
+      "crash": 8,
+      "landed_off_pad": 1
+    },
+    "pilot_only": 11,
+    "model_only": 0,
+    "p_vs_pilot": 0.0009765625
+  },
+  {
+    "arm": "gpt-4o-mini",
+    "shield": 1,
+    "n": 12,
+    "success": 0.0,
+    "successes": 0,
+    "lo": 2.7755575615628914e-17,
+    "hi": 0.24249400665524085,
+    "collision": 0.16666666666666666,
+    "metric": "max_breach_m",
+    "metric_mean": 0.22050877094357638,
+    "latency_ms": 682.6429117937543,
+    "cost_usd": 0.19463669999999994,
+    "outcomes": {
+      "timeout": 10,
+      "crash": 2
+    },
+    "pilot_only": 12,
+    "model_only": 0,
+    "p_vs_pilot": 0.00048828125
+  },
+  {
+    "arm": "jev",
+    "shield": 0,
+    "n": 12,
+    "success": 0.08333333333333333,
+    "successes": 1,
+    "lo": 0.014865094404917095,
+    "hi": 0.35387991114111694,
+    "collision": 0.08333333333333333,
+    "metric": "max_breach_m",
+    "metric_mean": 0.4676180378062231,
+    "latency_ms": 533.4061122955923,
+    "cost_usd": 0.028406951999999992,
+    "outcomes": {
+      "landed_on_pad": 11,
+      "crash": 1
+    },
+    "pilot_only": 11,
+    "model_only": 0,
+    "p_vs_pilot": 0.0009765625
+  },
+  {
+    "arm": "jev",
+    "shield": 1,
+    "n": 12,
+    "success": 0.0,
+    "successes": 0,
+    "lo": 2.7755575615628914e-17,
+    "hi": 0.24249400665524085,
+    "collision": 0.08333333333333333,
+    "metric": "max_breach_m",
+    "metric_mean": 0.31394416746474024,
+    "latency_ms": 522.2259264188713,
+    "cost_usd": 0.10346624400000008,
+    "outcomes": {
+      "timeout": 11,
+      "crash": 1
+    },
+    "pilot_only": 12,
+    "model_only": 0,
+    "p_vs_pilot": 0.00048828125
+  },
+  {
+    "arm": "mercury",
+    "shield": 0,
+    "n": 12,
+    "success": 0.16666666666666666,
+    "successes": 2,
+    "lo": 0.04696514218385378,
+    "hi": 0.4480308622529734,
+    "collision": 0.08333333333333333,
+    "metric": "max_breach_m",
+    "metric_mean": 0.49179181423651935,
+    "latency_ms": 507.50140320547695,
+    "cost_usd": 0.0,
+    "outcomes": {
+      "landed_on_pad": 10,
+      "crash": 1,
+      "landed_off_pad": 1
+    },
+    "pilot_only": 10,
+    "model_only": 0,
+    "p_vs_pilot": 0.001953125
+  },
+  {
+    "arm": "mercury",
+    "shield": 1,
+    "n": 12,
+    "success": 0.0,
+    "successes": 0,
+    "lo": 2.7755575615628914e-17,
+    "hi": 0.24249400665524085,
+    "collision": 0.16666666666666666,
+    "metric": "max_breach_m",
+    "metric_mean": 0.4694596811777714,
+    "latency_ms": 517.7415552825078,
+    "cost_usd": 0.0,
+    "outcomes": {
+      "crash": 2,
+      "timeout": 6,
+      "landed_off_pad": 2,
+      "landed_on_pad": 2
+    },
+    "pilot_only": 12,
+    "model_only": 0,
+    "p_vs_pilot": 0.00048828125
+  },
+  {
+    "arm": "zone_pilot",
+    "shield": 0,
+    "n": 12,
+    "success": 1.0,
+    "successes": 12,
+    "lo": 0.7575059933447592,
+    "hi": 1.0,
+    "collision": 0.0,
+    "metric": "max_breach_m",
+    "metric_mean": 0.0,
+    "latency_ms": 0.0032238036705927995,
+    "cost_usd": 0.0,
+    "outcomes": {
+      "landed_on_pad": 12
+    }
+  },
+  {
+    "arm": "zone_pilot",
+    "shield": 1,
+    "n": 12,
+    "success": 1.0,
+    "successes": 12,
+    "lo": 0.7575059933447592,
+    "hi": 1.0,
+    "collision": 0.0,
+    "metric": "max_breach_m",
+    "metric_mean": 0.0,
+    "latency_ms": 0.003424717666349931,
+    "cost_usd": 0.0,
+    "outcomes": {
+      "landed_on_pad": 12
+    }
+  }
+]

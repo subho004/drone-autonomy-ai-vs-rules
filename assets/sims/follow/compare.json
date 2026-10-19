@@ -1,0 +1,32 @@
+{
+  "scenario_seed": 5113,
+  "frames": 780,
+  "sides": [
+    {
+      "flight_id": 18259,
+      "label": "injected latency 0 ms",
+      "outcome": "completed",
+      "success": true,
+      "task": {
+        "in_band_frac": 1.0,
+        "mean_range_error_m": 0.20533520395052512,
+        "max_gap_m": 3.8732075978378906,
+        "lost": false,
+        "overran": false
+      }
+    },
+    {
+      "flight_id": 18264,
+      "label": "injected latency 1500 ms",
+      "outcome": "lost",
+      "success": false,
+      "task": {
+        "in_band_frac": 0.6141479099678496,
+        "mean_range_error_m": 1.1803657414211326,
+        "max_gap_m": 5.872732728713106,
+        "lost": true,
+        "overran": false
+      }
+    }
+  ]
+}

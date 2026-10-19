@@ -1,0 +1,19 @@
+# Classical arms only: no network, no spend. Latency sweep reveals the collision-vs-latency curve.
+name: pilot
+notes: Classical arms with injected latency on certified scenarios (shield off and on).
+suite:
+  name: pilot
+  n: 120
+  base_seed: 1000
+  n_impossible: 10
+latency_sweep_ms: [0, 50, 100, 200, 300, 500, 1000, 2000]
+shield: [0, 1]
+cadence: [sequential]
+reps: 1
+arms:
+  - {id: waypoint, kind: waypoint, measured: false}
+  - {id: always_hover, kind: always_hover, measured: false}
+  - {id: reflex_ttc, kind: reflex_ttc, measured: true}
+  - {id: fsm, kind: fsm, measured: true}
+  - {id: oracle, kind: oracle, measured: true}
+  - {id: oracle_err20, kind: oracle_err, config: {error_rate: 0.2}, measured: false}

@@ -1,0 +1,20 @@
+[
+  {
+    "flight": "T_pilot_llm_s9007",
+    "label": "drone 0 ms | gpt-4o-mini orbs (697 ms)",
+    "outcome": "landed_on_pad",
+    "success": true
+  },
+  {
+    "flight": "T_mercury_pursuit_s9007",
+    "label": "drone 499 ms | pursuit orbs",
+    "outcome": "collision",
+    "success": false
+  },
+  {
+    "flight": "T_jev_pn_s9007",
+    "label": "drone 504 ms | homing orbs",
+    "outcome": "crash",
+    "success": false
+  }
+]

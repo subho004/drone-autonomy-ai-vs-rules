@@ -1,0 +1,14 @@
+[
+  {
+    "flight": "A_pn_d0_s6019",
+    "label": "drone 0 ms | rival chaser drones",
+    "outcome": "landed_on_pad",
+    "success": true
+  },
+  {
+    "flight": "A_pn_d300_s6019",
+    "label": "drone 300 ms | rival chaser drones",
+    "outcome": "collision",
+    "success": false
+  }
+]

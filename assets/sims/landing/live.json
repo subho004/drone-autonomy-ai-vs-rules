@@ -1,0 +1,103 @@
+[
+  {
+    "arm": "gemini-flash-lite",
+    "shield": 0,
+    "n": 12,
+    "success": 0.3333333333333333,
+    "successes": 4,
+    "lo": 0.13812009109121315,
+    "hi": 0.6093779111272004,
+    "collision": 0.0,
+    "metric": "miss_m",
+    "metric_mean": 0.0652675183675932,
+    "latency_ms": 1033.4143544666667,
+    "cost_usd": 0.0087413,
+    "outcomes": {
+      "landed_safe": 4,
+      "landed_off_site": 8
+    },
+    "pilot_only": 8,
+    "model_only": 0,
+    "p_vs_pilot": 0.0078125
+  },
+  {
+    "arm": "gpt-4o-mini",
+    "shield": 0,
+    "n": 12,
+    "success": 0.16666666666666666,
+    "successes": 2,
+    "lo": 0.04696514218385378,
+    "hi": 0.4480308622529734,
+    "collision": 0.5833333333333334,
+    "metric": "miss_m",
+    "metric_mean": -0.5256552797603419,
+    "latency_ms": 670.1968307693609,
+    "cost_usd": 0.031142549999999995,
+    "outcomes": {
+      "landed_off_site": 3,
+      "crash": 7,
+      "landed_safe": 2
+    },
+    "pilot_only": 10,
+    "model_only": 0,
+    "p_vs_pilot": 0.001953125
+  },
+  {
+    "arm": "jev",
+    "shield": 0,
+    "n": 12,
+    "success": 0.0,
+    "successes": 0,
+    "lo": 2.7755575615628914e-17,
+    "hi": 0.24249400665524085,
+    "collision": 0.0,
+    "metric": "miss_m",
+    "metric_mean": 0.7965988990266321,
+    "latency_ms": 543.144353687984,
+    "cost_usd": 0.008820168,
+    "outcomes": {
+      "landed_off_site": 12
+    },
+    "pilot_only": 12,
+    "model_only": 0,
+    "p_vs_pilot": 0.00048828125
+  },
+  {
+    "arm": "mercury",
+    "shield": 0,
+    "n": 12,
+    "success": 0.16666666666666666,
+    "successes": 2,
+    "lo": 0.04696514218385378,
+    "hi": 0.4480308622529734,
+    "collision": 0.0,
+    "metric": "miss_m",
+    "metric_mean": 0.23654465221821627,
+    "latency_ms": 552.8946748687911,
+    "cost_usd": 0.0,
+    "outcomes": {
+      "landed_off_site": 10,
+      "landed_safe": 2
+    },
+    "pilot_only": 10,
+    "model_only": 0,
+    "p_vs_pilot": 0.001953125
+  },
+  {
+    "arm": "site_best",
+    "shield": 0,
+    "n": 12,
+    "success": 1.0,
+    "successes": 12,
+    "lo": 0.7575059933447592,
+    "hi": 1.0,
+    "collision": 0.0,
+    "metric": "miss_m",
+    "metric_mean": -1.0670397915843541,
+    "latency_ms": 0.0017172867431787938,
+    "cost_usd": 0.0,
+    "outcomes": {
+      "landed_safe": 12
+    }
+  }
+]

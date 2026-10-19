@@ -1,0 +1,26 @@
+{
+ "gpt-4o-mini|128|5200|0|096a3044252ecfd8": {
+  "answer": "YES",
+  "verdict": true,
+  "latency_ms": 1310.534458,
+  "cost_usd": 0.00043575,
+  "tokens_in": 2901,
+  "tokens_out": 1
+ },
+ "gpt-4o-mini|128|5200|1|f83253ea5f229a15": {
+  "answer": "NO",
+  "verdict": false,
+  "latency_ms": 976.242084,
+  "cost_usd": 0.00043575,
+  "tokens_in": 2901,
+  "tokens_out": 1
+ },
+ "gpt-4o-mini|128|5200|2|2778977b8fafd1c0": {
+  "answer": "YES",
+  "verdict": true,
+  "latency_ms": 949.5635,
+  "cost_usd": 0.00043575,
+  "tokens_in": 2901,
+  "tokens_out": 1
+ }
+}

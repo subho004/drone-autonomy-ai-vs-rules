@@ -1,0 +1,442 @@
+{
+  "cells": [
+    {
+      "dodger": "jev",
+      "chaser": "llm",
+      "n": 12,
+      "survived": 0,
+      "lo": 2.7755575615628914e-17,
+      "hi": 0.24249400665524085,
+      "hits": 4,
+      "outcomes": {
+        "collision": 4,
+        "crash": 8
+      },
+      "dodger_latency_ms": 523.8921792925704,
+      "chaser_latency_ms": 699.5761861377501,
+      "cost_usd": 0.040527126000000004
+    },
+    {
+      "dodger": "jev",
+      "chaser": "llm-gemini",
+      "n": 12,
+      "survived": 1,
+      "lo": 0.014865094404917095,
+      "hi": 0.35387991114111694,
+      "hits": 4,
+      "outcomes": {
+        "crash": 7,
+        "landed_on_pad": 1,
+        "collision": 4
+      },
+      "dodger_latency_ms": 518.8799451586792,
+      "chaser_latency_ms": 999.4235865395486,
+      "cost_usd": 0.032382504
+    },
+    {
+      "dodger": "jev",
+      "chaser": "pn",
+      "n": 12,
+      "survived": 1,
+      "lo": 0.014865094404917095,
+      "hi": 0.35387991114111694,
+      "hits": 7,
+      "outcomes": {
+        "collision": 7,
+        "crash": 4,
+        "landed_on_pad": 1
+      },
+      "dodger_latency_ms": 522.6001955098419,
+      "chaser_latency_ms": null,
+      "cost_usd": 0.03052476
+    },
+    {
+      "dodger": "jev",
+      "chaser": "pursuit",
+      "n": 12,
+      "survived": 2,
+      "lo": 0.04696514218385378,
+      "hi": 0.4480308622529734,
+      "hits": 6,
+      "outcomes": {
+        "collision": 6,
+        "crash": 4,
+        "landed_on_pad": 2
+      },
+      "dodger_latency_ms": 509.1582391265595,
+      "chaser_latency_ms": null,
+      "cost_usd": 0.02936434200000001
+    },
+    {
+      "dodger": "mercury",
+      "chaser": "llm",
+      "n": 12,
+      "survived": 3,
+      "lo": 0.08894166839405471,
+      "hi": 0.5323053349335657,
+      "hits": 3,
+      "outcomes": {
+        "collision": 3,
+        "crash": 4,
+        "landed_off_pad": 2,
+        "landed_on_pad": 3
+      },
+      "dodger_latency_ms": 502.0902259837867,
+      "chaser_latency_ms": 719.2981504793188,
+      "cost_usd": 0.012213299999999998
+    },
+    {
+      "dodger": "mercury",
+      "chaser": "llm-gemini",
+      "n": 12,
+      "survived": 3,
+      "lo": 0.08894166839405471,
+      "hi": 0.5323053349335657,
+      "hits": 5,
+      "outcomes": {
+        "collision": 5,
+        "landed_on_pad": 3,
+        "landed_off_pad": 2,
+        "crash": 2
+      },
+      "dodger_latency_ms": 532.8124961494743,
+      "chaser_latency_ms": 1022.5099898043818,
+      "cost_usd": 0.0
+    },
+    {
+      "dodger": "mercury",
+      "chaser": "pn",
+      "n": 12,
+      "survived": 0,
+      "lo": 2.7755575615628914e-17,
+      "hi": 0.24249400665524085,
+      "hits": 10,
+      "outcomes": {
+        "collision": 10,
+        "crash": 2
+      },
+      "dodger_latency_ms": 520.0503813031959,
+      "chaser_latency_ms": null,
+      "cost_usd": 0.0
+    },
+    {
+      "dodger": "mercury",
+      "chaser": "pursuit",
+      "n": 12,
+      "survived": 1,
+      "lo": 0.014865094404917095,
+      "hi": 0.35387991114111694,
+      "hits": 8,
+      "outcomes": {
+        "collision": 8,
+        "landed_on_pad": 1,
+        "crash": 3
+      },
+      "dodger_latency_ms": 521.919073895334,
+      "chaser_latency_ms": null,
+      "cost_usd": 0.0
+    },
+    {
+      "dodger": "navreflex",
+      "chaser": "llm",
+      "n": 12,
+      "survived": 4,
+      "lo": 0.13812009109121315,
+      "hi": 0.6093779111272004,
+      "hits": 2,
+      "outcomes": {
+        "landed_off_pad": 1,
+        "crash": 5,
+        "landed_on_pad": 4,
+        "collision": 2
+      },
+      "dodger_latency_ms": 0.0022496449601533955,
+      "chaser_latency_ms": 696.8980902266994,
+      "cost_usd": 0.012148499999999991
+    },
+    {
+      "dodger": "navreflex",
+      "chaser": "llm-gemini",
+      "n": 12,
+      "survived": 5,
+      "lo": 0.19326031365875665,
+      "hi": 0.6804886874504503,
+      "hits": 4,
+      "outcomes": {
+        "collision": 4,
+        "crash": 3,
+        "landed_on_pad": 5
+      },
+      "dodger_latency_ms": 0.0020608320979087756,
+      "chaser_latency_ms": 984.3184842599867,
+      "cost_usd": 0.0
+    },
+    {
+      "dodger": "navreflex",
+      "chaser": "pn",
+      "n": 12,
+      "survived": 3,
+      "lo": 0.08894166839405471,
+      "hi": 0.5323053349335657,
+      "hits": 9,
+      "outcomes": {
+        "collision": 9,
+        "landed_on_pad": 3
+      },
+      "dodger_latency_ms": 0.0008942350455562495,
+      "chaser_latency_ms": null,
+      "cost_usd": 0.0
+    },
+    {
+      "dodger": "navreflex",
+      "chaser": "pursuit",
+      "n": 12,
+      "survived": 3,
+      "lo": 0.08894166839405471,
+      "hi": 0.5323053349335657,
+      "hits": 5,
+      "outcomes": {
+        "collision": 5,
+        "landed_on_pad": 3,
+        "crash": 4
+      },
+      "dodger_latency_ms": 0.0008365310226827015,
+      "chaser_latency_ms": null,
+      "cost_usd": 0.0
+    },
+    {
+      "dodger": "pilot",
+      "chaser": "llm",
+      "n": 12,
+      "survived": 6,
+      "lo": 0.2537815976337061,
+      "hi": 0.7462184023662939,
+      "hits": 2,
+      "outcomes": {
+        "collision": 2,
+        "crash": 4,
+        "landed_on_pad": 6
+      },
+      "dodger_latency_ms": 0.0022642466022299327,
+      "chaser_latency_ms": 696.8455911549764,
+      "cost_usd": 0.010685099999999993
+    },
+    {
+      "dodger": "pilot",
+      "chaser": "llm-gemini",
+      "n": 12,
+      "survived": 6,
+      "lo": 0.2537815976337061,
+      "hi": 0.7462184023662939,
+      "hits": 4,
+      "outcomes": {
+        "collision": 4,
+        "landed_on_pad": 6,
+        "crash": 2
+      },
+      "dodger_latency_ms": 0.002026769673814899,
+      "chaser_latency_ms": 1044.1929568194525,
+      "cost_usd": 0.0
+    },
+    {
+      "dodger": "pilot",
+      "chaser": "pn",
+      "n": 12,
+      "survived": 6,
+      "lo": 0.2537815976337061,
+      "hi": 0.7462184023662939,
+      "hits": 3,
+      "outcomes": {
+        "crash": 3,
+        "landed_on_pad": 6,
+        "collision": 3
+      },
+      "dodger_latency_ms": 0.0009331586763726943,
+      "chaser_latency_ms": null,
+      "cost_usd": 0.0
+    },
+    {
+      "dodger": "pilot",
+      "chaser": "pursuit",
+      "n": 12,
+      "survived": 6,
+      "lo": 0.2537815976337061,
+      "hi": 0.7462184023662939,
+      "hits": 5,
+      "outcomes": {
+        "landed_on_pad": 6,
+        "collision": 5,
+        "crash": 1
+      },
+      "dodger_latency_ms": 0.0008452937877114291,
+      "chaser_latency_ms": null,
+      "cost_usd": 0.0
+    }
+  ],
+  "dodger_rank": [
+    {
+      "dodger": "pilot",
+      "survived": 24,
+      "n": 48,
+      "rate": 0.5
+    },
+    {
+      "dodger": "navreflex",
+      "survived": 15,
+      "n": 48,
+      "rate": 0.3125
+    },
+    {
+      "dodger": "mercury",
+      "survived": 7,
+      "n": 48,
+      "rate": 0.14583333333333334
+    },
+    {
+      "dodger": "jev",
+      "survived": 4,
+      "n": 48,
+      "rate": 0.08333333333333333
+    }
+  ],
+  "chaser_rank": [
+    {
+      "chaser": "pn",
+      "hits": 29,
+      "n": 48,
+      "rate": 0.6041666666666666
+    },
+    {
+      "chaser": "pursuit",
+      "hits": 24,
+      "n": 48,
+      "rate": 0.5
+    },
+    {
+      "chaser": "llm-gemini",
+      "hits": 17,
+      "n": 48,
+      "rate": 0.3541666666666667
+    },
+    {
+      "chaser": "llm",
+      "hits": 11,
+      "n": 48,
+      "rate": 0.22916666666666666
+    }
+  ],
+  "paired": {
+    "dodgers": [
+      {
+        "a": "pilot",
+        "b": "navreflex",
+        "n": 48,
+        "a_only": 15,
+        "b_only": 6,
+        "p": 0.0783538818359375,
+        "p_holm": 0.172119140625
+      },
+      {
+        "a": "pilot",
+        "b": "mercury",
+        "n": 48,
+        "a_only": 20,
+        "b_only": 3,
+        "p": 0.00048828125,
+        "p_holm": 0.00244140625
+      },
+      {
+        "a": "pilot",
+        "b": "jev",
+        "n": 48,
+        "a_only": 20,
+        "b_only": 0,
+        "p": 1.9073486328125e-06,
+        "p_holm": 1.1444091796875e-05
+      },
+      {
+        "a": "navreflex",
+        "b": "mercury",
+        "n": 48,
+        "a_only": 11,
+        "b_only": 3,
+        "p": 0.057373046875,
+        "p_holm": 0.172119140625
+      },
+      {
+        "a": "navreflex",
+        "b": "jev",
+        "n": 48,
+        "a_only": 14,
+        "b_only": 3,
+        "p": 0.012725830078125,
+        "p_holm": 0.0509033203125
+      },
+      {
+        "a": "mercury",
+        "b": "jev",
+        "n": 48,
+        "a_only": 7,
+        "b_only": 4,
+        "p": 0.548828125,
+        "p_holm": 0.548828125
+      }
+    ],
+    "chasers": [
+      {
+        "a": "pn",
+        "b": "pursuit",
+        "n": 48,
+        "a_only": 12,
+        "b_only": 7,
+        "p": 0.359283447265625,
+        "p_holm": 0.430389404296875
+      },
+      {
+        "a": "pn",
+        "b": "llm",
+        "n": 48,
+        "a_only": 21,
+        "b_only": 3,
+        "p": 0.0002771615982055664,
+        "p_holm": 0.0016629695892333984
+      },
+      {
+        "a": "pn",
+        "b": "llm-gemini",
+        "n": 48,
+        "a_only": 19,
+        "b_only": 7,
+        "p": 0.028959274291992188,
+        "p_holm": 0.11583709716796875
+      },
+      {
+        "a": "pursuit",
+        "b": "llm",
+        "n": 48,
+        "a_only": 16,
+        "b_only": 3,
+        "p": 0.004425048828125,
+        "p_holm": 0.022125244140625
+      },
+      {
+        "a": "pursuit",
+        "b": "llm-gemini",
+        "n": 48,
+        "a_only": 12,
+        "b_only": 5,
+        "p": 0.143463134765625,
+        "p_holm": 0.430389404296875
+      },
+      {
+        "a": "llm",
+        "b": "llm-gemini",
+        "n": 48,
+        "a_only": 3,
+        "b_only": 9,
+        "p": 0.14599609375,
+        "p_holm": 0.430389404296875
+      }
+    ]
+  }
+}

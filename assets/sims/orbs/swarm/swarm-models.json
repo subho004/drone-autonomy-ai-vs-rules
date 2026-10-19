@@ -1,0 +1,20 @@
+[
+  {
+    "flight": "S_pn_d0_s7053",
+    "label": "rule pilot 0 ms | orb swarm",
+    "outcome": "landed_on_pad",
+    "success": true
+  },
+  {
+    "flight": "SB_mercury_pn_s7053",
+    "label": "drone 456 ms | homing orbs",
+    "outcome": "collision",
+    "success": false
+  },
+  {
+    "flight": "SB_jev_pn_s7053",
+    "label": "drone 517 ms | homing orbs",
+    "outcome": "collision",
+    "success": false
+  }
+]

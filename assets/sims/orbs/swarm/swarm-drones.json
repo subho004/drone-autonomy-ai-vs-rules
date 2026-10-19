@@ -1,0 +1,14 @@
+[
+  {
+    "flight": "S_pn_d0_s7099",
+    "label": "rule pilot 0 ms | rival drone swarm",
+    "outcome": "landed_on_pad",
+    "success": true
+  },
+  {
+    "flight": "S_pn_d300_s7099",
+    "label": "rule pilot 300 ms | rival drone swarm",
+    "outcome": "collision",
+    "success": false
+  }
+]

@@ -1,0 +1,1066 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drone Autonomy: AI vs Rules</title>
+<meta name="color-scheme" content="light dark">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #f4f6f8; --surface: #ffffff; --surface-2: #f0f3f6; --text: #1b2127; --muted: #5a6672;
+  --border: #dbe0e6; --grid: #e6eaee; --accent: #2a6fdb; --accent-soft: rgba(42,111,219,.12);
+  --danger: #c8281e; --danger-soft: rgba(200,40,30,.12); --ok: #17794a; --ok-soft: rgba(23,121,74,.12);
+  --warn: #a35f00; --warn-soft: rgba(163,95,0,.13); --shadow: 0 1px 2px rgba(20,30,40,.06);
+  --src-model: #2a6fdb; --src-fallback: #d98a00; --src-shield: #8a4fc7;
+  --c0: #0072b2; --c1: #d98a00; --c2: #00945f; --c3: #c2609a; --c4: #3aa0dc; --c5: #7a6aa8; --c6: #8a8a22; --c7: #5a6672;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1217; --surface: #161b22; --surface-2: #1d242d; --text: #e7eaee; --muted: #9aa5b1;
+    --border: #2a323c; --grid: #232a33; --accent: #5b9cff; --accent-soft: rgba(91,156,255,.16);
+    --danger: #ff6f64; --danger-soft: rgba(255,111,100,.16); --ok: #3fcf8e; --ok-soft: rgba(63,207,142,.15);
+    --warn: #f0b429; --warn-soft: rgba(240,180,41,.15); --shadow: 0 1px 2px rgba(0,0,0,.4);
+    --src-model: #5b9cff; --src-fallback: #f0b429; --src-shield: #b48ee0;
+    --c0: #4aa3df; --c1: #f0b429; --c2: #2fc29a; --c3: #e08fbd; --c4: #7cc7f0; --c5: #a79bd0; --c6: #b6b64f; --c7: #9aa5b1;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--text); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-variant-numeric: tabular-nums; }
+h1, h2, h3 { margin: 0; font-weight: 600; }
+h1 { font-size: 17px; }
+button, select, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+.wrap { max-width: 1320px; margin: 0 auto; padding: 0 16px; }
+
+/* header */
+.top { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; }
+.top .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding-top: 10px; padding-bottom: 10px; }
+.brand { font-size: 16px; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.brand svg { color: var(--accent); }
+.exp-pick { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.exp-pick select { min-width: 0; max-width: 100%; }
+@media (max-width: 600px) { .exp-pick { flex: 1 1 100%; } .exp-pick select { flex: 1; } }
+.exp-pick label { color: var(--muted); font-size: 12px; }
+select, .btn, input[type=text], input[type=number] { background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 5px 9px; min-height: 30px; }
+select:focus-visible, button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+.progress { flex: 1 1 320px; min-width: 240px; display: flex; flex-direction: column; gap: 4px; }
+.progress .row { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+.progress .row b { color: var(--text); font-weight: 600; }
+.track { height: 8px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--border); overflow: hidden; display: flex; }
+.track .fill { background: var(--accent); transition: width .5s ease; }
+.track .fail { background: var(--danger); }
+.live { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
+.live i { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); display: inline-block; }
+.live.on i { background: var(--ok); box-shadow: 0 0 0 0 var(--ok); animation: pulse 1.6s infinite; }
+.live.done i { background: var(--accent); }
+@keyframes pulse { 70% { box-shadow: 0 0 0 6px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+@media (prefers-reduced-motion: reduce) { .live.on i { animation: none; } .track .fill { transition: none; } }
+
+nav.tabs { display: flex; gap: 4px; padding: 12px 0 0; }
+nav.tabs a { padding: 7px 14px; border-radius: 8px 8px 0 0; color: var(--muted); text-decoration: none; border: 1px solid transparent; border-bottom: none; }
+nav.tabs a[aria-current=page] { background: var(--surface); color: var(--text); border-color: var(--border); font-weight: 600; margin-bottom: -1px; }
+.tabbar { border-bottom: 1px solid var(--border); }
+
+main { padding: 16px 0 48px; }
+.grid { display: grid; gap: 16px; }
+.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 900px) { .g2 { grid-template-columns: minmax(0, 1fr); } }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; box-shadow: var(--shadow); min-width: 0; }
+.card h2 { font-size: 15px; }
+.card .sub { color: var(--muted); font-size: 12px; margin: 2px 0 8px; }
+.card .head { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+.mode-tag { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); border: 1px solid transparent; white-space: nowrap; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 4px 0 6px; }
+.legend button { background: none; border: none; padding: 2px 4px; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; border-radius: 4px; }
+.legend button[aria-pressed=false] { opacity: .4; text-decoration: line-through; }
+.legend i { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+.legend i.sw { height: 10px; width: 10px; border-radius: 2px; }
+.chart { width: 100%; position: relative; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.scrollx { overflow-x: auto; }
+.axis text { fill: var(--muted); font-size: 11px; }
+.gridline { stroke: var(--grid); stroke-width: 1; }
+.axis-title { fill: var(--muted); font-size: 11px; }
+.tip { position: fixed; z-index: 50; pointer-events: none; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 9px; font-size: 12px; box-shadow: 0 4px 14px rgba(0,0,0,.2); max-width: 260px; display: none; }
+.tip b { font-weight: 600; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; font-size: 12px; color: var(--muted); }
+.controls label { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; min-width: 0; }
+.controls select { min-width: 0; max-width: 100%; }
+#cmpSelect { max-width: min(320px, 62vw); }
+body { overflow-x: hidden; }
+
+/* tables */
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { text-align: right; padding: 6px 9px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+th:first-child, td:first-child, th.l, td.l { text-align: left; }
+th { font-size: 12px; font-weight: 600; color: var(--muted); position: sticky; top: 0; background: var(--surface); }
+th button { background: none; border: none; padding: 0; font: inherit; color: inherit; font-weight: 600; display: inline-flex; gap: 4px; align-items: center; }
+th[aria-sort=ascending] button::after { content: "▲"; font-size: 9px; }
+th[aria-sort=descending] button::after { content: "▼"; font-size: 9px; }
+tbody tr:hover { background: var(--surface-2); }
+tr.click { cursor: pointer; }
+.ci { color: var(--muted); font-size: 11px; }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; vertical-align: baseline; }
+.cellbar { position: relative; }
+.cellbar::before { content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: var(--w, 0%); background: var(--bar, var(--accent)); opacity: .55; border-radius: 0 2px 0 0; }
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 1px 8px; border-radius: 99px; font-size: 12px; font-weight: 600; border: 1px solid transparent; }
+.badge.success { color: var(--ok); background: var(--ok-soft); }
+.badge.collision { color: var(--danger); background: var(--danger-soft); }
+.badge.timeout, .badge.failed { color: var(--warn); background: var(--warn-soft); }
+.badge.other { color: var(--muted); background: var(--surface-2); }
+.pager { display: flex; gap: 10px; align-items: center; justify-content: flex-end; padding-top: 10px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+
+/* empty + banners */
+.empty { text-align: center; padding: 36px 16px; color: var(--muted); border: 1px dashed var(--border); border-radius: 10px; background: var(--surface); }
+.empty svg { color: var(--muted); opacity: .8; margin-bottom: 8px; }
+.empty h3 { color: var(--text); font-size: 15px; margin-bottom: 4px; }
+.empty code, code.cmd { background: var(--surface-2); border: 1px solid var(--border); padding: 2px 6px; border-radius: 5px; font-size: 12px; }
+.mini-empty { padding: 28px 10px; text-align: center; color: var(--muted); font-size: 13px; }
+.banner { background: var(--warn-soft); color: var(--warn); border: 1px solid var(--warn); border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; font-size: 13px; }
+
+/* replay */
+.transport { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; position: sticky; top: 58px; z-index: 10; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; box-shadow: var(--shadow); }
+.transport .scrub { flex: 1 1 260px; min-width: 180px; accent-color: var(--accent); }
+.transport .clock { font-size: 13px; min-width: 130px; text-align: right; }
+.panes { display: grid; gap: 16px; grid-template-columns: repeat(var(--cols, 1), minmax(0, 1fr)); }
+@media (max-width: 900px) { .panes { grid-template-columns: minmax(0, 1fr); } }
+.pane .phead { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.pane .ptitle { display: flex; align-items: center; gap: 8px; font-weight: 600; flex-wrap: wrap; }
+.pane .meta { color: var(--muted); font-size: 12px; display: flex; gap: 4px 14px; flex-wrap: wrap; margin-bottom: 8px; }
+.pane .meta b { color: var(--text); font-weight: 600; }
+.canvaswrap { position: relative; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface-2); }
+canvas { display: block; width: 100%; }
+.chip { position: absolute; right: 10px; top: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 4px 9px; font-size: 12px; box-shadow: var(--shadow); line-height: 1.3; }
+.chip b { display: block; font-size: 13px; letter-spacing: .02em; }
+.chip small { color: var(--muted); }
+.chip.shield { border-color: var(--src-shield); }
+.chip.shield b { color: var(--src-shield); }
+.stamp { position: absolute; right: 10px; top: 10px; }
+.sub-h { font-size: 12px; color: var(--muted); margin: 10px 0 4px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.gantt { position: relative; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); touch-action: none; cursor: ew-resize; }
+.gantt svg { display: block; width: 100%; }
+.gantt .playhead { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--text); pointer-events: none; }
+.gantt text { fill: var(--muted); font-size: 11px; }
+.gantt text.in { fill: #fff; font-weight: 600; }
+.gantt .lbl-bar { fill: var(--text); }
+.keys { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.keys span { display: inline-flex; align-items: center; gap: 5px; }
+.keys i { width: 12px; height: 10px; border-radius: 2px; display: inline-block; }
+.kbd { font-size: 11px; border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; background: var(--surface-2); }
+.pill { font-size: 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 99px; padding: 1px 9px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 600px) {
+  .card { padding: 12px; }
+  .transport { top: 0; position: static; }
+  .top { position: static; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="5" r="2.5"/><circle cx="19" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M7 7l3.5 3.5M17 7l-3.5 3.5M7 17l3.5-3.5M17 17l-3.5-3.5"/><rect x="10" y="10" width="4" height="4" rx="1"/></svg>
+      <h1>Drone Autonomy: AI vs Rules</h1>
+    </div>
+    <div class="exp-pick">
+      <label for="expSelect">Experiment</label>
+      <select id="expSelect" aria-label="Experiment"></select>
+      <label for="scopeSelect">Scenarios</label>
+      <select id="scopeSelect" aria-label="Scenario scope">
+        <option value="challenge">Certified obstacle scenarios (headline)</option>
+        <option value="controls">Impossible controls (B &lt; 0)</option>
+        <option value="all">All flights</option>
+      </select>
+    </div>
+    <div class="progress" id="progress" aria-live="polite"></div>
+  </div>
+  <div class="tabbar"><div class="wrap">
+    <nav class="tabs" aria-label="Views">
+      <a href="#overview" data-tab="overview">Overview</a>
+      <a href="#flights" data-tab="flights">Flights</a>
+      <a href="#replay" data-tab="replay">Replay</a>
+    </nav>
+  </div></div>
+</header>
+<main class="wrap" id="view"></main>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+"use strict";
+/* =========================================================== helpers */
+const $ = (sel, root = document) => root.querySelector(sel);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const NS = "http://www.w3.org/2000/svg";
+const fmtPct = (v, d = 1) => (v == null ? "–" : (v * 100).toFixed(d) + "%");
+const fmtNum = (v, d = 1) => (v == null || Number.isNaN(v) ? "–" : Number(v).toFixed(d));
+const fmtInt = (v) => (v == null ? "–" : Number(v).toLocaleString("en-US"));
+const fmtMs = (ms) => (ms == null ? "–" : ms < 10 ? ms.toFixed(1) + " ms" : ms < 1000 ? Math.round(ms) + " ms" : (ms / 1000).toFixed(ms < 10000 ? 2 : 1) + " s");
+const fmtDur = (s) => {
+  if (s == null || !isFinite(s)) return "–";
+  if (s < 90) return Math.round(s) + " s";
+  if (s < 5400) return Math.round(s / 60) + " min";
+  return (s / 3600).toFixed(1) + " h";
+};
+const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const ACTIONS = ["FORWARD", "LEFT", "RIGHT", "ASCEND", "DESCEND", "BRAKE", "HOVER", "AVOID_LEFT", "AVOID_RIGHT", "RETURN_HOME", "EMERGENCY_LAND"];
+const TIERS = { T0: "≥ 3 s", T1: "1–3 s", T2: "0.3–1 s", T3: "0.1–0.3 s", T4: "30–100 ms", T5: "< 30 ms", TX: "impossible" };
+
+async function api(path) {
+  const res = await fetch("/api/v1" + path, { headers: { Accept: "application/json" } });
+  let body = null;
+  try { body = await res.json(); } catch { /* non-JSON error */ }
+  if (!res.ok) { const e = new Error(body?.message || res.statusText); e.status = res.status; throw e; }
+  return body.data;
+}
+
+const state = {
+  scope: "challenge", experiments: [], expId: null, progress: null, results: null, curves: null, dist: null,
+  budgets: null, armIds: [], sort: { key: "arm_id", dir: "asc" }, hidden: new Set(),
+  showShield: true, cellKey: null, flights: { page: 1, filters: {}, data: null, selected: [] },
+  replay: { ids: [], data: [], t: 0, tmax: 0, playing: false, speed: 1, last: 0, raf: 0, compareOptions: null },
+  sse: null, sseState: "off", route: "overview", reloadTimer: 0,
+};
+
+function armColor(id) {
+  const i = state.armIds.indexOf(id);
+  return `var(--c${(i < 0 ? 7 : i) % 8})`;
+}
+
+/* tooltip: elements carrying data-tip show a floating label */
+const tipEl = $("#tip");
+document.addEventListener("pointermove", (e) => {
+  const t = e.target.closest?.("[data-tip]");
+  if (!t) { tipEl.style.display = "none"; return; }
+  tipEl.innerHTML = t.getAttribute("data-tip");
+  tipEl.style.display = "block";
+  const w = tipEl.offsetWidth, h = tipEl.offsetHeight;
+  let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + w > innerWidth - 6) x = e.clientX - w - 14;
+  if (y + h > innerHeight - 6) y = e.clientY - h - 14;
+  tipEl.style.left = Math.max(4, x) + "px"; tipEl.style.top = Math.max(4, y) + "px";
+});
+document.addEventListener("pointerleave", () => { tipEl.style.display = "none"; });
+
+/* ======================================================= chart kit (SVG) */
+/* Symlog x-axis: log-like for large latencies but defined at 0 ms (an injected-latency cell). */
+const SYMLOG_C = 20;
+const symlog = (v) => Math.log10(1 + Math.max(v, 0) / SYMLOG_C);
+function niceLogTicks(lo, hi, sparse) {
+  const cands = sparse ? [0, 100, 1000, 10000] : [0, 10, 30, 100, 300, 1000, 3000, 10000];
+  return cands.filter((v) => v >= lo * 0.999 && v <= hi * 1.001);
+}
+const fmtTickMs = (v) => (v >= 1000 ? v / 1000 + " s" : v >= 1 ? v + " ms" : v + " ms");
+
+function observeSize(el, draw) {
+  let raf = 0;
+  const run = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { const w = el.clientWidth; if (w > 0) draw(w); }); };
+  const ro = new ResizeObserver(run);
+  ro.observe(el);
+  el._ro?.disconnect();
+  el._ro = ro;
+  run();
+}
+
+/** Line chart with optional CI ribbons. series: {id,label,color,dash,points:[{x,y,lo,hi,tip,marker}]} */
+function drawLines(el, o) {
+  observeSize(el, (W) => {
+    const H = Math.max(240, Math.min(360, W * 0.5));
+    const m = { l: 46, r: 14, t: 10, b: 38 };
+    const iw = W - m.l - m.r, ih = H - m.t - m.b;
+    const xs = o.series.flatMap((s) => s.points.map((p) => p.x)).concat(o.extra?.flatMap((s) => s.points.map((p) => p.x)) ?? []);
+    if (!xs.length) { el.innerHTML = `<div class="mini-empty">No data for the selected series.</div>`; return; }
+    const minX = Math.min(...xs), maxX = Math.max(...xs);
+    const lo = minX > 0 ? minX * 0.7 : 0, hi = maxX * 1.25;
+    const lx = symlog(lo), hx = symlog(hi);
+    const X = (v) => m.l + ((symlog(v) - lx) / (hx - lx || 1)) * iw;
+    const Y = (v) => m.t + (1 - v / o.ymax) * ih;
+    let g = "";
+    for (let i = 0; i <= 5; i++) {
+      const v = (o.ymax * i) / 5, y = Y(v);
+      g += `<line class="gridline" x1="${m.l}" x2="${W - m.r}" y1="${y}" y2="${y}"/><text x="${m.l - 8}" y="${y + 4}" text-anchor="end">${Math.round(v * 100)}%</text>`;
+    }
+    for (const v of niceLogTicks(lo, hi, iw < 560)) {
+      const x = X(v);
+      g += `<line class="gridline" x1="${x}" x2="${x}" y1="${m.t}" y2="${m.t + ih}"/><text x="${x}" y="${m.t + ih + 16}" text-anchor="middle">${fmtTickMs(v)}</text>`;
+    }
+    for (const s of o.extra ?? []) {
+      const d = s.points.map((p, i) => `${i ? "L" : "M"}${X(p.x).toFixed(1)},${Y(p.y).toFixed(1)}`).join("");
+      g += `<path d="${d}" fill="none" stroke="var(--text)" opacity=".55" stroke-width="1.5" stroke-dasharray="2 4" data-tip="${esc(s.tip)}"/>`;
+      const last = s.points.at(-1);
+      g += `<text x="${X(last.x) - 4}" y="${Y(last.y) - 6}" text-anchor="end" style="fill:var(--text);font-size:11px;opacity:.75">oracle bound</text>`;
+    }
+    let ribbons = "", lines = "", pts = "";
+    for (const s of o.series) {
+      if (state.hidden.has(s.id)) continue;
+      const P = s.points;
+      if (P.length > 1) {
+        if (!s.dash) {
+        const up = P.map((p, i) => `${i ? "L" : "M"}${X(p.x).toFixed(1)},${Y(p.hi).toFixed(1)}`).join("");
+        const dn = P.slice().reverse().map((p) => `L${X(p.x).toFixed(1)},${Y(p.lo).toFixed(1)}`).join("");
+        ribbons += `<path d="${up}${dn}Z" fill="${s.color}" opacity=".11"/>`;
+        }
+        lines += `<path d="${P.map((p, i) => `${i ? "L" : "M"}${X(p.x).toFixed(1)},${Y(p.y).toFixed(1)}`).join("")}" fill="none" stroke="${s.color}" stroke-width="2" ${s.dash ? `stroke-dasharray="${s.dash}"` : ""} stroke-linejoin="round"/>`;
+      }
+      for (const p of P) {
+        const cx = X(p.x), cy = Y(p.y);
+        if (P.length === 1 || p.marker === "diamond") {
+          lines += `<line x1="${cx}" x2="${cx}" y1="${Y(p.lo)}" y2="${Y(p.hi)}" stroke="${s.color}" stroke-width="2"/>`;
+        }
+        const shape = o.noMarkers ? `<circle cx="${cx}" cy="${cy}" r="1.8" fill="${s.color}"/>` : p.marker === "diamond"
+          ? `<path d="M${cx},${cy - 6}L${cx + 6},${cy}L${cx},${cy + 6}L${cx - 6},${cy}Z" fill="var(--surface)" stroke="${s.color}" stroke-width="2"/>`
+          : `<circle cx="${cx}" cy="${cy}" r="3.6" fill="${s.dash ? "var(--surface)" : s.color}" stroke="${s.color}" stroke-width="2"/>`;
+        pts += `<g data-tip="${esc(p.tip)}">${shape}<circle cx="${cx}" cy="${cy}" r="11" fill="transparent"/></g>`;
+      }
+    }
+    el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(o.aria)}" class="axis">${g}${ribbons}${lines}${pts}
+      <text class="axis-title" x="${m.l + iw / 2}" y="${H - 4}" text-anchor="middle">${esc(o.xLabel)}</text>
+      <text class="axis-title" transform="translate(12 ${m.t + ih / 2}) rotate(-90)" text-anchor="middle">${esc(o.yLabel)}</text></svg>`;
+  });
+}
+
+/** Grouped bar chart with CI whiskers. groups: [{label, sub, bars:[{id,color,y,lo,hi,tip}]}] */
+function drawBars(el, o) {
+  observeSize(el, (W) => {
+    const groups = o.groups;
+    if (!groups.length) { el.innerHTML = `<div class="mini-empty">No data for this cell.</div>`; return; }
+    const H = 270, m = { l: 46, r: 10, t: 10, b: 52 };
+    const minW = groups.length * 70 + m.l + m.r;
+    const Wd = Math.max(W, minW);
+    const iw = Wd - m.l - m.r, ih = H - m.t - m.b;
+    const Y = (v) => m.t + (1 - v) * ih;
+    const gw = iw / groups.length;
+    let g = "";
+    for (let i = 0; i <= 5; i++) { const y = Y(i / 5); g += `<line class="gridline" x1="${m.l}" x2="${Wd - m.r}" y1="${y}" y2="${y}"/><text x="${m.l - 8}" y="${y + 4}" text-anchor="end">${i * 20}%</text>`; }
+    let bars = "";
+    groups.forEach((gr, gi) => {
+      const n = gr.bars.length || 1, pad = Math.max(6, gw * 0.12), bw = Math.min(26, (gw - pad * 2) / n);
+      const x0 = m.l + gi * gw + (gw - bw * n) / 2;
+      gr.bars.forEach((b, bi) => {
+        const x = x0 + bi * bw, y = Y(b.y), h = Math.max(1, m.t + ih - y), cx = x + bw / 2;
+        bars += `<g data-tip="${esc(b.tip)}"><rect x="${x + 1}" y="${y}" width="${Math.max(2, bw - 2)}" height="${h}" rx="2" fill="${b.color}" ${b.shield ? `fill-opacity=".35" stroke="${b.color}" stroke-width="1.5" stroke-dasharray="3 2"` : `opacity=".9"`}/>
+          <line x1="${cx}" x2="${cx}" y1="${Y(b.lo)}" y2="${Y(b.hi)}" stroke="var(--text)" stroke-width="1.2" opacity=".7"/>
+          <line x1="${cx - 3}" x2="${cx + 3}" y1="${Y(b.hi)}" y2="${Y(b.hi)}" stroke="var(--text)" stroke-width="1.2" opacity=".7"/>
+          <line x1="${cx - 3}" x2="${cx + 3}" y1="${Y(b.lo)}" y2="${Y(b.lo)}" stroke="var(--text)" stroke-width="1.2" opacity=".7"/>
+          <rect x="${x}" y="${m.t}" width="${bw}" height="${ih}" fill="transparent"/></g>`;
+      });
+      let [l1, l2] = [gr.label, gr.sub ?? ""];
+      if (!l2 && l1.includes(" ") && l1.length * 6.6 > gw) { const k = l1.indexOf(" "); [l1, l2] = [l1.slice(0, k), l1.slice(k + 1)]; }
+      g += `<text x="${m.l + gi * gw + gw / 2}" y="${m.t + ih + 16}" text-anchor="middle" style="fill:var(--text);font-size:12px">${esc(l1)}</text>
+            <text x="${m.l + gi * gw + gw / 2}" y="${m.t + ih + 30}" text-anchor="middle">${esc(l2)}</text>`;
+    });
+    el.innerHTML = `<div class="scrollx"><svg viewBox="0 0 ${Wd} ${H}" width="${Wd}" height="${H}" role="img" aria-label="${esc(o.aria)}" class="axis" style="max-width:none;width:${Wd}px">${g}${bars}
+      <text class="axis-title" transform="translate(12 ${m.t + ih / 2}) rotate(-90)" text-anchor="middle">${esc(o.yLabel)}</text></svg></div>`;
+  });
+}
+
+function legendHTML(items, attr) {
+  return `<div class="legend" role="group" aria-label="Series">${items.map((it) => `<button type="button" ${attr}="${esc(it.id)}" aria-pressed="${!state.hidden.has(it.id)}"><i class="${it.dash ? "" : ""}" style="background:${it.color};${it.dash ? `background:repeating-linear-gradient(90deg,${it.color} 0 4px,transparent 4px 7px)` : ""}"></i>${esc(it.label)}</button>`).join("")}</div>`;
+}
+
+/* =================================================== header + progress */
+function renderProgress() {
+  const p = state.progress, el = $("#progress");
+  if (!p) { el.innerHTML = `<div class="row"><span>No experiment selected</span></div><div class="track"></div>`; return; }
+  const failPct = p.total ? (p.counts.failed || 0) / p.total * 100 : 0;
+  const donePct = p.total ? (p.done / p.total) * 100 - failPct : 0;
+  const live = state.sseState === "live";
+  const status = p.complete ? "complete" : (p.counts.running ? "running" : p.status);
+  el.innerHTML = `<div class="row">
+      <span class="live ${p.complete ? "done" : live ? "on" : ""}"><i></i>${p.complete ? "Complete" : live ? "Live" : esc(status)}</span>
+      <span><b>${fmtInt(p.done)}</b> / ${fmtInt(p.total)} flights · <b>${(p.fraction * 100).toFixed(1)}%</b></span>
+      <span>${p.counts.running ? `<b>${p.counts.running}</b> running · ` : ""}${p.counts.queued ? `<b>${fmtInt(p.counts.queued)}</b> queued · ` : ""}${p.counts.failed ? `<b>${p.counts.failed}</b> failed · ` : ""}${p.rate_per_min ? `<b>${p.rate_per_min.toFixed(0)}</b>/min · ` : ""}${p.complete ? "finished" : p.eta_s != null ? `ETA <b>${fmtDur(p.eta_s)}</b>` : "ETA –"}</span>
+    </div>
+    <div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${(p.fraction * 100).toFixed(0)}" aria-label="Experiment progress"><div class="fill" style="width:${Math.max(0, donePct)}%"></div><div class="fail" style="width:${failPct}%"></div></div>`;
+}
+
+function startSSE() {
+  stopSSE();
+  if (!state.expId || typeof EventSource === "undefined") return;
+  const es = new EventSource(`/api/v1/experiments/${state.expId}/events`);
+  state.sse = es;
+  es.addEventListener("progress", (e) => {
+    state.sseState = "live";
+    const before = state.progress?.done ?? -1;
+    state.progress = JSON.parse(e.data);
+    renderProgress();
+    if (state.progress.done !== before && before >= 0) scheduleReload();
+  });
+  es.addEventListener("done", () => { es.close(); state.sseState = "off"; state.sse = null; renderProgress(); scheduleReload(); });
+  es.onerror = () => { state.sseState = "off"; renderProgress(); };
+}
+function stopSSE() { state.sse?.close(); state.sse = null; state.sseState = "off"; }
+function scheduleReload() {
+  clearTimeout(state.reloadTimer);
+  state.reloadTimer = setTimeout(() => { if (state.route === "overview") loadOverview(true); }, 6000);
+}
+
+/* ============================================================ overview */
+function emptyState(title, body) {
+  return `<div class="empty"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7" stroke-dasharray="2 3"/></svg><h3>${title}</h3><div>${body}</div></div>`;
+}
+const SEED_HINT = `Seed synthetic demo data with <code>uv run python scripts/seed_demo_db.py</code>, then start the API with <code>DB_PATH=data/demo.db</code>.`;
+
+async function loadExperiments() {
+  const page = await api("/experiments?page_size=100");
+  state.experiments = page.items;
+  const sel = $("#expSelect");
+  sel.innerHTML = page.items.length
+    ? page.items.map((e) => `<option value="${e.id}">${esc(e.name)} (#${e.id} · ${fmtInt(e.n_complete)}/${fmtInt(e.n_flights)})</option>`).join("")
+    : `<option value="">No experiments</option>`;
+  const wanted = Number(localStorageGet("exp"));
+  state.expId = page.items.find((e) => e.id === wanted)?.id ?? page.items[0]?.id ?? null;
+  if (state.expId != null) sel.value = String(state.expId);
+}
+function localStorageGet(k) { try { return localStorage.getItem(k); } catch { return null; } }
+function localStorageSet(k, v) { try { localStorage.setItem(k, v); } catch { /* ignore */ } }
+
+async function loadProgress() {
+  state.progress = state.expId == null ? null : await api(`/experiments/${state.expId}/progress`);
+  renderProgress();
+}
+
+async function fetchBudgets() {
+  const out = [];
+  for (let page = 1; page <= 10; page++) {
+    const d = await api(`/scenarios?page=${page}&page_size=500`);
+    out.push(...d.items.filter((s) => scopeKeeps(s)).map((s) => s.budget_s));
+    if (page >= d.pages) break;
+  }
+  return out;
+}
+
+const CHALLENGE_EVENTS = ["obstacle_static", "obstacle_approach", "intruder_cross", "mission"];
+function scopeKeeps(s) {
+  if (state.scope === "all") return true;
+  if (state.scope === "controls") return s.budget_s < 0;
+  return s.budget_s >= 0 && CHALLENGE_EVENTS.includes(s.event_type);
+}
+
+async function loadOverview(quiet = false) {
+  const root = $("#view");
+  if (state.expId == null) {
+    root.innerHTML = emptyState("No experiments yet", `Nothing has been written to the database. ${SEED_HINT}`);
+    return;
+  }
+  if (!quiet) root.innerHTML = `<div class="mini-empty">Loading results…</div>`;
+  try {
+    const id = state.expId;
+    const [results, curves, dist, arms, budgets] = await Promise.all([
+      api(`/experiments/${id}/results?page_size=500&scope=${state.scope}`), api(`/experiments/${id}/latency-curves?scope=${state.scope}`),
+      api(`/experiments/${id}/latency-distribution`), api(`/arms?page_size=500`), state.budgets ?? fetchBudgets(),
+    ]);
+    if (id !== state.expId) return;
+    state.results = results; state.curves = curves; state.dist = dist; state.budgets = budgets;
+    state.armIds = arms.items.map((a) => a.id).sort();
+    renderOverview();
+  } catch (err) {
+    root.innerHTML = `<div class="banner">Could not load results: ${esc(err.message)}</div>`;
+  }
+}
+
+function budgetCdf() {
+  const b = state.budgets ?? [];
+  if (!b.length) return null;
+  const pts = [];
+  for (let e = 0; e <= 40; e++) {
+    const x = 10 ** (0.5 + (e / 40) * 3.7); // ~3 ms .. 16 s
+    pts.push({ x, y: b.filter((v) => v * 1000 < x).length / b.length });
+  }
+  return { points: pts, tip: `<b>Oracle bound</b><br>Fraction of scenarios whose reaction budget is shorter than the latency (collision-free reactors cannot beat this).` };
+}
+
+function renderOverview() {
+  const { results, curves, dist } = state;
+  const root = $("#view");
+  if (!results.total) {
+    root.innerHTML = emptyState("No completed flights yet", `This experiment has no finished flights, so there is nothing to plot. Results appear here as workers complete flights.`);
+    return;
+  }
+  if (!curves.series.length && !state.cellKey) state.cellKey = null;
+  root.innerHTML = `
+    <div class="grid">
+      <section class="card" id="cardCurve">
+        <div class="head"><div><h2>Collision rate vs decision latency</h2>
+          <div class="sub">Per arm, Wilson 95% bands · symlog-x · solid = fixed injected latency, ◇ = measured or sampled latency (plotted at its mean wall-clock decision time) · dashed lines = reflex shield on</div></div>
+          <span class="mode-tag">latency mode: fixed + measured + sampled</span></div>
+        <div id="curveLegend"></div><div class="chart" id="curveChart"></div>
+      </section>
+      <div class="grid g2">
+        <section class="card"><div class="head"><div><h2>By reaction-budget tier</h2><div class="sub">Collision rate, Wilson 95% whiskers. Tier = time budget before an unavoidable hit.</div></div><span class="mode-tag" id="tierMode"></span></div>
+          <div class="controls" id="cellControls"></div><div class="chart" id="tierChart"></div><div id="tierLegend"></div></section>
+        <section class="card"><div class="head"><div><h2>By event type</h2><div class="sub">Same latency cell as the tier chart.</div></div><span class="mode-tag" id="eventMode"></span></div>
+          <div class="chart" id="eventChart" style="margin-top:34px"></div></section>
+      </div>
+      <div class="grid g2">
+        <section class="card"><div class="head"><div><h2>Decision latency ECDF</h2><div class="sub">Cumulative fraction of decisions per provider/model, log-x.</div></div><span class="mode-tag">measured provider latency</span></div>
+          <div id="ecdfLegend"></div><div class="chart" id="ecdfChart"></div></section>
+        <section class="card"><div class="head"><div><h2>Latency percentiles</h2><div class="sub">From the same decision samples (measured, excludes injected delay).</div></div></div>
+          <div class="tablewrap" id="pctTable"></div></section>
+      </div>
+      <section class="card"><div class="head"><div><h2>Results</h2><div class="sub">One row per arm × latency cell. Click a header to sort, a row to browse its flights.</div></div></div>
+        <div class="tablewrap" id="resultsTable"></div></section>
+    </div>`;
+  renderCurve(); renderBreakdowns(); renderEcdf(); renderResultsTable();
+}
+
+function curveItems() {
+  const items = [];
+  for (const a of state.armIds) items.push({ id: a, label: a, color: armColor(a) });
+  return items;
+}
+
+function renderCurve() {
+  const { curves } = state;
+  const arms = [...new Set(curves.series.map((s) => s.arm_id))].sort();
+  const hasShield = curves.series.some((s) => s.shield);
+  $("#curveLegend").innerHTML = legendHTML(arms.map((a) => ({ id: a, label: a, color: armColor(a) })), "data-arm") +
+    (hasShield ? `<div class="controls"><label><input type="checkbox" id="shieldToggle" ${state.showShield ? "checked" : ""}> Show shield variants (dashed)</label></div>` : "");
+  const series = [];
+  for (const s of curves.series.filter((x) => state.showShield || !x.shield)) {
+    const fixedPts = s.points.filter((p) => !p.latency_measured);
+    const sampledPts = s.points.filter((p) => p.latency_measured);
+    const mk = (p, diamond) => ({
+      x: p.latency_ms, y: p.rate, lo: p.ci_low, hi: p.ci_high, marker: diamond ? "diamond" : undefined,
+      tip: `<b>${esc(s.arm_id)}${s.shield ? " + shield" : ""}</b> · ${diamond ? "sampled (measured mean)" : "fixed"} ${fmtMs(p.latency_ms)}<br>collision <b>${fmtPct(p.rate)}</b> [${fmtPct(p.ci_low)}–${fmtPct(p.ci_high)}]<br>${p.collisions}/${p.n} flights`,
+    });
+    const color = armColor(s.arm_id), dash = s.shield ? "6 4" : "";
+    if (fixedPts.length) series.push({ id: s.arm_id, color, dash, points: fixedPts.map((p) => mk(p, false)) });
+    if (sampledPts.length) series.push({ id: s.arm_id, color, dash, points: sampledPts.map((p) => mk(p, true)) });
+  }
+  const cdf = budgetCdf();
+  drawLines($("#curveChart"), {
+    series, ymax: 1, extra: cdf ? [cdf] : [], aria: "Collision rate versus decision latency per arm",
+    xLabel: "Decision latency (log scale)", yLabel: "Collision rate",
+  });
+  document.querySelectorAll("[data-arm]").forEach((b) => b.addEventListener("click", () => {
+    const id = b.dataset.arm; state.hidden.has(id) ? state.hidden.delete(id) : state.hidden.add(id);
+    renderCurve(); renderBreakdowns();
+  }));
+  $("#shieldToggle")?.addEventListener("change", (e) => { state.showShield = e.target.checked; renderCurve(); renderBreakdowns(); });
+}
+
+function cellLabel(c) { return c.latency_mode === "sampled" ? "sampled" : `${c.latency_mode} ${fmtMs(c.latency_ms)}`; }
+
+function renderBreakdowns() {
+  const { curves } = state;
+  const cells = new Map();
+  for (const r of [...curves.by_tier, ...curves.by_event]) {
+    const k = `${r.latency_mode}|${r.latency_ms}`;
+    if (!cells.has(k)) cells.set(k, { latency_mode: r.latency_mode, latency_ms: r.latency_ms });
+  }
+  const list = [...cells.entries()].sort((a, b) => (a[1].latency_mode === b[1].latency_mode ? a[1].latency_ms - b[1].latency_ms : a[1].latency_mode < b[1].latency_mode ? -1 : 1));
+  if (!list.length) { for (const id of ["tierChart", "eventChart"]) $("#" + id).innerHTML = `<div class="mini-empty">No data yet.</div>`; return; }
+  if (!state.cellKey || !cells.has(state.cellKey)) state.cellKey = (list.find(([, c]) => c.latency_mode === "fixed" && c.latency_ms >= 100) ?? list[0])[0];
+  $("#cellControls").innerHTML = `<label>Latency cell <select id="cellSelect">${list.map(([k, c]) => `<option value="${esc(k)}" ${k === state.cellKey ? "selected" : ""}>${esc(cellLabel(c))}</option>`).join("")}</select></label>`;
+  $("#cellSelect").addEventListener("change", (e) => { state.cellKey = e.target.value; renderBreakdowns(); });
+  const [mode, ms] = state.cellKey.split("|");
+  const tag = `latency mode: ${mode}${mode === "fixed" ? " " + fmtMs(Number(ms)) : ""}`;
+  $("#tierMode").textContent = tag; $("#eventMode").textContent = tag;
+  const pick = (rows) => rows.filter((r) => r.latency_mode === mode && String(r.latency_ms) === ms && (state.showShield || !r.shield) && !state.hidden.has(r.arm_id));
+  const groupBars = (rows, order, labelOf, subOf) => order.map((gname) => ({
+    label: labelOf(gname), sub: subOf(gname),
+    bars: rows.filter((r) => r.group === gname).sort((a, b) => (a.arm_id + a.shield < b.arm_id + b.shield ? -1 : 1)).map((r) => ({
+      id: r.arm_id, shield: !!r.shield, color: armColor(r.arm_id), y: r.rate, lo: r.ci_low, hi: r.ci_high,
+      tip: `<b>${esc(r.arm_id)}${r.shield ? " + shield" : ""}</b> · ${esc(gname)}<br>collision <b>${fmtPct(r.rate)}</b> [${fmtPct(r.ci_low)}–${fmtPct(r.ci_high)}]<br>${r.collisions}/${r.n} flights`,
+    })),
+  })).filter((g) => g.bars.length);
+  const tierRows = pick(curves.by_tier), evRows = pick(curves.by_event);
+  const tierOrder = [...new Set(tierRows.map((r) => r.group))].sort();
+  const evOrder = [...new Set(evRows.map((r) => r.group))].sort();
+  drawBars($("#tierChart"), { groups: groupBars(tierRows, tierOrder, (g) => g, (g) => TIERS[g] ?? ""), yLabel: "Collision rate", aria: "Collision rate by reaction-budget tier" });
+  drawBars($("#eventChart"), { groups: groupBars(evRows, evOrder, (g) => g.replace(/_/g, " "), () => ""), yLabel: "Collision rate", aria: "Collision rate by event type" });
+  const shown = [...new Set(tierRows.map((r) => r.arm_id))];
+  $("#tierLegend").innerHTML = `<div class="keys">${shown.map((a) => `<span><i style="background:${armColor(a)}"></i>${esc(a)}</span>`).join("")}${state.showShield ? `<span><i style="background:transparent;border:1.5px dashed var(--muted)"></i>dashed outline = shield on (beside its base arm)</span>` : ""}</div>`;
+}
+
+const ECDF_PALETTE = [0, 1, 2, 3, 4, 5, 6, 7];
+function renderEcdf() {
+  const { dist } = state;
+  if (!dist.series.length) {
+    $("#ecdfChart").innerHTML = `<div class="mini-empty">No decisions recorded yet.</div>`;
+    $("#pctTable").innerHTML = `<div class="mini-empty">No decisions recorded yet.</div>`;
+    return;
+  }
+  const colorOf = (i) => `var(--c${ECDF_PALETTE[i % 8]})`;
+  const series = dist.series.map((s, i) => ({
+    id: "e:" + s.label, label: s.label, color: colorOf(i),
+    points: s.ecdf.map((p) => ({ x: p.ms, y: p.p, lo: p.p, hi: p.p, tip: `<b>${esc(s.label)}</b><br>${fmtMs(p.ms)}: <b>${fmtPct(p.p)}</b> of decisions are faster` })),
+  }));
+  $("#ecdfLegend").innerHTML = legendHTML(series.map((s) => ({ id: s.id, label: s.label, color: s.color })), "data-ecdf");
+  drawLines($("#ecdfChart"), { series, ymax: 1, aria: "ECDF of decision latency per provider", xLabel: "Decision latency (log scale)", yLabel: "Cumulative fraction", noMarkers: true });
+  document.querySelectorAll("[data-ecdf]").forEach((b) => b.addEventListener("click", () => {
+    const id = b.dataset.ecdf; state.hidden.has(id) ? state.hidden.delete(id) : state.hidden.add(id); renderEcdf();
+  }));
+  $("#pctTable").innerHTML = `<table><thead><tr><th class="l">Provider / model</th><th>n</th><th>p50</th><th>p95</th><th>p99</th><th>max</th></tr></thead><tbody>${dist.series.map((s, i) =>
+    `<tr><td><span class="dot" style="background:${colorOf(i)}"></span>${esc(s.label)}</td><td>${fmtInt(s.n)}</td><td>${fmtMs(s.p50_ms)}</td><td>${fmtMs(s.p95_ms)}</td><td>${fmtMs(s.p99_ms)}</td><td>${fmtMs(s.max_ms)}</td></tr>`).join("")}</tbody></table>`;
+}
+
+const RESULT_COLS = [
+  ["arm_id", "Arm", (r) => `<span class="dot" style="background:${armColor(r.arm_id)}"></span>${esc(r.arm_id)}`, "l"],
+  ["latency_mode", "Mode", (r) => esc(r.latency_mode), "l"],
+  ["latency_ms", "Latency", (r) => (r.latency_ms < 0 ? "sampled" : fmtMs(r.latency_ms))],
+  ["shield", "Shield", (r) => (r.shield ? "on" : "off"), "l"],
+  ["n", "n", (r) => fmtInt(r.n)],
+  ["collisions", "Collisions", (r) => fmtInt(r.collisions)],
+  ["collision_rate", "Collision rate", (r) => `${fmtPct(r.collision_rate)} <span class="ci">[${fmtPct(r.collision_ci_low, 0)}–${fmtPct(r.collision_ci_high, 0)}]</span>`, "bar"],
+  ["success_rate", "Success rate", (r) => `${fmtPct(r.success_rate)} <span class="ci">[${fmtPct(r.success_ci_low, 0)}–${fmtPct(r.success_ci_high, 0)}]</span>`],
+  ["lat_mean_ms", "Mean lat.", (r) => fmtMs(r.lat_mean_ms)],
+  ["lat_p95_ms", "p95 lat.", (r) => fmtMs(r.lat_p95_ms)],
+  ["path_length", "Path (m)", (r) => fmtNum(r.path_length)],
+  ["time_to_goal", "Time to goal (s)", (r) => fmtNum(r.time_to_goal)],
+  ["invalid_rate", "Invalid", (r) => fmtPct(r.invalid_rate)],
+];
+function renderResultsTable() {
+  const rows = state.results.items.slice();
+  const { key, dir } = state.sort;
+  rows.sort((a, b) => {
+    const x = a[key], y = b[key];
+    const c = typeof x === "string" ? x.localeCompare(y) : (x ?? -Infinity) - (y ?? -Infinity);
+    return dir === "asc" ? c : -c;
+  });
+  $("#resultsTable").innerHTML = `<table><thead><tr>${RESULT_COLS.map(([k, label, , cls]) =>
+    `<th class="${cls === "l" ? "l" : ""}" aria-sort="${state.sort.key === k ? (dir === "asc" ? "ascending" : "descending") : "none"}"><button type="button" data-sort="${k}">${label}</button></th>`).join("")}</tr></thead>
+    <tbody>${rows.map((r, i) => `<tr class="click" data-i="${i}" tabindex="0" title="Browse flights of ${esc(r.arm_id)}">${RESULT_COLS.map(([, , f, cls]) =>
+      cls === "bar" ? `<td class="cellbar" style="--w:${(r.collision_rate * 100).toFixed(1)}%;--bar:var(--danger)">${f(r)}</td>` : `<td class="${cls === "l" ? "l" : ""}">${f(r)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+  document.querySelectorAll("[data-sort]").forEach((b) => b.addEventListener("click", () => {
+    const k = b.dataset.sort;
+    state.sort = { key: k, dir: state.sort.key === k && state.sort.dir === "asc" ? "desc" : "asc" };
+    renderResultsTable();
+  }));
+  const open = (tr) => { const r = rows[Number(tr.dataset.i)]; state.flights.filters = { arm_id: r.arm_id }; state.flights.page = 1; location.hash = "#flights"; };
+  document.querySelectorAll("#resultsTable tr.click").forEach((tr) => {
+    tr.addEventListener("click", () => open(tr));
+    tr.addEventListener("keydown", (e) => { if (e.key === "Enter") open(tr); });
+  });
+}
+
+/* ============================================================== flights */
+const FLIGHT_PAGE_SIZE = 15;
+function outcomeBadge(o) {
+  const cls = o === "success" ? "success" : o === "collision" ? "collision" : o === "timeout" ? "timeout" : "other";
+  const icon = o === "success" ? "✓" : o === "collision" ? "✕" : o === "timeout" ? "⧖" : "•";
+  return `<span class="badge ${cls}">${icon} ${esc(o ?? "pending")}</span>`;
+}
+
+async function loadFlights() {
+  const root = $("#view");
+  if (state.expId == null) { root.innerHTML = emptyState("No experiments yet", SEED_HINT); return; }
+  const f = state.flights;
+  const q = new URLSearchParams({ page: f.page, page_size: FLIGHT_PAGE_SIZE });
+  for (const [k, v] of Object.entries(f.filters)) if (v) q.set(k, v);
+  try {
+    if (!state.armIds.length) state.armIds = (await api("/arms?page_size=500")).items.map((a) => a.id).sort();
+    f.data = await api(`/experiments/${state.expId}/flights?${q}`);
+  } catch (err) { root.innerHTML = `<div class="banner">Could not load flights: ${esc(err.message)}</div>`; return; }
+  renderFlights();
+}
+
+function renderFlights() {
+  const f = state.flights, d = f.data, root = $("#view");
+  const sel = f.selected;
+  const filterSel = (name, label, options) => `<label>${label} <select data-f="${name}"><option value="">all</option>${options.map((o) => `<option ${f.filters[name] === o ? "selected" : ""}>${esc(o)}</option>`).join("")}</select></label>`;
+  const compareOk = sel.length === 2 && sel[0].scenario_id === sel[1].scenario_id;
+  root.innerHTML = `<section class="card">
+    <div class="head"><div><h2>Flights</h2><div class="sub">Open a flight to replay it. Tick two flights of the same scenario to compare arms side by side.</div></div>
+      <div class="controls"><button class="btn" id="btnCompare" ${compareOk ? "" : "disabled"} title="${compareOk ? "" : "Select two flights of the same scenario"}">Compare selected (${sel.length}/2)</button></div></div>
+    <div class="controls" style="margin:6px 0 10px">
+      ${filterSel("arm_id", "Arm", state.armIds)}
+      ${filterSel("outcome", "Outcome", ["success", "collision", "timeout"])}
+      ${filterSel("event_type", "Event", ["obstacle_static", "obstacle_approach", "intruder_cross", "battery_critical", "gps_loss", "clear"])}
+      <label>Scenario <input type="text" data-f="scenario_id" value="${esc(f.filters.scenario_id ?? "")}" placeholder="scn-0007" size="9"></label>
+      <button class="btn" id="btnClear">Clear</button>
+      <span>${fmtInt(d.total)} flights</span>
+    </div>
+    ${d.items.length ? `<div class="tablewrap"><table><thead><tr><th></th><th class="l">Flight</th><th class="l">Scenario</th><th class="l">Arm</th><th class="l">Latency</th><th class="l">Event</th><th>Tier</th><th class="l">Outcome</th><th>React (s)</th><th>Min clr (m)</th><th>Decisions</th><th></th></tr></thead><tbody>
+      ${d.items.map((r) => `<tr>
+        <td><input type="checkbox" data-sel="${r.id}" ${sel.some((s) => s.id === r.id) ? "checked" : ""} aria-label="Select flight ${r.id}"></td>
+        <td class="l">#${r.id}</td><td class="l">${esc(r.scenario_id)}</td>
+        <td class="l"><span class="dot" style="background:${armColor(r.arm_id)}"></span>${esc(r.arm_id)}${r.shield ? ` <span class="pill">shield</span>` : ""}</td>
+        <td class="l">${r.latency_mode === "sampled" ? "sampled" : esc(r.latency_mode) + " " + fmtMs(r.latency_ms)}</td>
+        <td class="l">${esc(r.event_type.replace(/_/g, " "))}</td><td>${esc(r.tier)}</td><td class="l">${outcomeBadge(r.outcome)}</td>
+        <td>${fmtNum(r.reaction_time_s, 3)}</td><td>${fmtNum(r.min_clearance, 2)}</td><td>${fmtInt(r.n_decisions)}</td>
+        <td>${r.has_trajectory ? `<a class="btn" href="#replay/${r.id}">Replay</a>` : `<span class="ci" title="Decisions only; no Parquet trajectory">no trajectory</span>`}</td></tr>`).join("")}</tbody></table></div>
+      <div class="pager"><button class="btn" id="pgPrev" ${d.page <= 1 ? "disabled" : ""}>Prev</button><span>Page ${d.page} of ${d.pages}</span><button class="btn" id="pgNext" ${d.page >= d.pages ? "disabled" : ""}>Next</button></div>`
+      : `<div class="mini-empty">No flights match these filters.</div>`}
+  </section>`;
+  root.querySelectorAll("[data-f]").forEach((el) => el.addEventListener("change", () => {
+    f.filters[el.dataset.f] = el.value.trim(); f.page = 1; loadFlights();
+  }));
+  $("#btnClear").addEventListener("click", () => { f.filters = {}; f.page = 1; loadFlights(); });
+  $("#pgPrev")?.addEventListener("click", () => { f.page--; loadFlights(); });
+  $("#pgNext")?.addEventListener("click", () => { f.page++; loadFlights(); });
+  root.querySelectorAll("[data-sel]").forEach((cb) => cb.addEventListener("change", () => {
+    const row = d.items.find((r) => r.id === Number(cb.dataset.sel));
+    if (cb.checked) { f.selected.push(row); if (f.selected.length > 2) f.selected.shift(); } else f.selected = f.selected.filter((s) => s.id !== row.id);
+    renderFlights();
+  }));
+  $("#btnCompare").addEventListener("click", () => { location.hash = `#replay/${f.selected[0].id},${f.selected[1].id}`; });
+}
+
+/* =============================================================== replay */
+const R = state.replay;
+
+async function loadReplay(ids) {
+  const root = $("#view");
+  cancelAnimationFrame(R.raf); R.playing = false;
+  if (!ids.length) {
+    root.innerHTML = emptyState("Pick a flight to replay", `Open the <a href="#flights">Flights</a> tab and press <b>Replay</b> on a row, or tick two flights of the same scenario and press <b>Compare</b>.`);
+    return;
+  }
+  root.innerHTML = `<div class="mini-empty">Loading replay…</div>`;
+  try {
+    R.data = await Promise.all(ids.map((id) => api(`/flights/${id}/replay`)));
+  } catch (err) {
+    root.innerHTML = err.status === 404
+      ? emptyState("No trajectory for this flight", `${esc(err.message)}. Decisions are still available at <code>/api/v1/flights/${ids[0]}/decisions</code>.`)
+      : `<div class="banner">Could not load replay: ${esc(err.message)}</div>`;
+    return;
+  }
+  R.ids = ids; R.t = 0; R.speed = R.speed || 1;
+  R.tmax = Math.max(...R.data.map((d) => d.trajectory.t.at(-1) ?? 0));
+  for (const d of R.data) prepareFlight(d);
+  R.compareOptions = null;
+  renderReplay();
+  loadCompareOptions();
+}
+
+function prepareFlight(d) {
+  // pack decisions into non-overlapping lanes
+  const lanes = [];
+  d.lanes = d.decisions.slice().sort((a, b) => a.t_obs - b.t_obs).map((x) => {
+    let lane = lanes.findIndex((end) => end <= x.t_obs + 1e-6);
+    if (lane < 0) { lane = lanes.length; lanes.push(0); }
+    lanes[lane] = x.t_apply;
+    return { ...x, lane };
+  });
+  d.nLanes = Math.max(1, lanes.length);
+  const tr = d.trajectory;
+  let maxX = 0; for (const v of tr.x) if (v != null && v > maxX) maxX = v;
+  d.maxX = Math.max(maxX, d.scenario.spec?.goal?.[0] ?? 0);
+  d.goalX = d.scenario.spec?.goal?.[0] ?? null;
+  d.trailEnd = tr.t.length;
+}
+
+async function loadCompareOptions() {
+  const first = R.data[0];
+  if (!first) return;
+  try {
+    const q = new URLSearchParams({ scenario_id: first.flight.scenario_id, page_size: 200 });
+    R.compareOptions = (await api(`/experiments/${first.flight.experiment_id}/flights?${q}`)).items.filter((f) => f.has_trajectory);
+    const sel = $("#cmpSelect");
+    if (sel) sel.innerHTML = cmpOptionsHTML();
+  } catch { /* optional */ }
+}
+const flightLabel = (f) => `#${f.id} · ${f.arm_id}${f.shield ? "+shield" : ""} · ${f.latency_mode === "sampled" ? "sampled" : f.latency_mode + " " + fmtMs(f.latency_ms)} · ${f.outcome}`;
+function cmpOptionsHTML() {
+  const cur = R.ids[1];
+  return `<option value="">Compare with…</option>` + (R.compareOptions ?? []).filter((f) => f.id !== R.ids[0]).map((f) => `<option value="${f.id}" ${f.id === cur ? "selected" : ""}>${esc(flightLabel(f))}</option>`).join("");
+}
+
+function renderReplay() {
+  const root = $("#view");
+  const a = R.data[0];
+  const sc = a.scenario;
+  root.innerHTML = `
+    <div class="card" style="margin-bottom:14px">
+      <div class="head"><div><h2>Scenario ${esc(sc.id)}</h2>
+        <div class="sub">${esc(sc.event_type.replace(/_/g, " "))} · tier <b>${esc(sc.tier)}</b> ${TIERS[sc.tier] ? "(" + TIERS[sc.tier] + ")" : ""} · reaction budget <b>${sc.budget_s < 0 ? "impossible (" + fmtMs(sc.budget_s * 1000) + ")" : fmtMs(sc.budget_s * 1000)}</b> · seed ${sc.seed}</div></div>
+        <div class="controls"><label>Compare <select id="cmpSelect">${cmpOptionsHTML()}</select></label>${R.ids.length > 1 ? `<button class="btn" id="btnSolo">Single view</button>` : ""}<a class="btn" href="#flights">Back to flights</a></div></div>
+    </div>
+    <div class="transport" role="group" aria-label="Playback controls">
+      <button class="btn primary" id="btnPlay" aria-label="Play">▶ Play</button>
+      <button class="btn" id="btnPrev" aria-label="Step back one frame" title="Step back (←)">⏮</button>
+      <button class="btn" id="btnNext" aria-label="Step forward one frame" title="Step forward (→)">⏭</button>
+      <label class="controls">Speed <select id="speedSel">${[0.1, 0.25, 0.5, 1, 2, 4].map((s) => `<option value="${s}" ${s === R.speed ? "selected" : ""}>${s}×</option>`).join("")}</select></label>
+      <input class="scrub" id="scrub" type="range" min="0" max="${R.tmax.toFixed(3)}" step="0.001" value="0" aria-label="Sim time">
+      <span class="clock" id="clock"></span>
+    </div>
+    <div class="panes" style="--cols:${R.data.length}">
+      ${R.data.map((d, i) => paneHTML(d, i)).join("")}
+    </div>
+    <div class="keys" style="margin-top:12px"><span><span class="kbd">Space</span> play/pause</span><span><span class="kbd">←</span><span class="kbd">→</span> step one frame</span><span>Clock is simulation time; latency bars show request → applied.</span></div>`;
+  R.data.forEach((d, i) => { setupPane(d, i); });
+  $("#btnPlay").addEventListener("click", togglePlay);
+  $("#btnPrev").addEventListener("click", () => step(-1));
+  $("#btnNext").addEventListener("click", () => step(1));
+  $("#speedSel").addEventListener("change", (e) => { R.speed = Number(e.target.value); });
+  $("#scrub").addEventListener("input", (e) => { R.t = Number(e.target.value); paint(); });
+  $("#cmpSelect").addEventListener("change", (e) => { const v = e.target.value; location.hash = `#replay/${R.ids[0]}${v ? "," + v : ""}`; });
+  $("#btnSolo")?.addEventListener("click", () => { location.hash = `#replay/${R.ids[0]}`; });
+  paint();
+}
+
+function paneHTML(d, i) {
+  const f = d.flight, tr = d.trajectory;
+  const minClr = f.min_clearance;
+  return `<section class="card pane" data-pane="${i}">
+    <div class="phead"><div class="ptitle"><span class="dot" style="background:${armColor(f.arm_id)}"></span>${esc(f.arm_id)}${f.shield ? ` <span class="pill">shield</span>` : ""} ${outcomeBadge(f.outcome)}</div>
+      <span class="mode-tag">latency mode: ${f.latency_mode === "sampled" ? "sampled" : esc(f.latency_mode) + " " + fmtMs(f.latency_ms)}</span></div>
+    <div class="meta"><span>flight <b>#${f.id}</b></span><span>reaction <b>${fmtNum(f.reaction_time_s, 3)} s</b></span><span>min clearance <b>${fmtNum(minClr, 2)} m</b></span><span>decisions <b>${fmtInt(f.n_decisions)}</b></span><span>mean lat <b>${fmtMs(f.lat_mean_ms)}</b></span><span>shield overrides <b>${f.shield_overrides ?? 0}</b></span><span>replay <b>${fmtNum(d.hz, 0)} Hz</b></span></div>
+    <div class="sub-h"><span>Top-down · x forward →, y lateral (+y up/left) · dashed = reference path</span><span>◯ reference carrot</span></div>
+    <div class="canvaswrap"><canvas data-top="${i}" aria-label="Top-down view of ${esc(f.arm_id)}"></canvas><div class="chip" data-chip="${i}"></div></div>
+    <div class="sub-h"><span>Side view · altitude z (m) along x</span><span data-alt="${i}"></span></div>
+    <div class="canvaswrap"><canvas data-side="${i}" aria-label="Side altitude view"></canvas></div>
+    <div class="sub-h"><span>Decision loop · request sent at <b>obs</b> → response applied at <b>apply</b></span><span>${tr.t.length ? "click or drag to scrub" : ""}</span></div>
+    <div class="gantt" data-gantt="${i}"></div>
+    <div class="keys"><span><i style="background:var(--src-model)"></i>model</span><span><i style="background:var(--src-fallback)"></i>fallback (invalid)</span><span><i style="background:var(--src-shield)"></i>shield</span><span><i style="background:var(--danger-soft);border:1px solid var(--danger)"></i>reaction budget</span></div>
+  </section>`;
+}
+
+function setupPane(d, i) {
+  const gantt = $(`[data-gantt="${i}"]`);
+  const pointer = (e) => {
+    const rect = gantt.getBoundingClientRect(), m = ganttMargins();
+    const frac = (e.clientX - rect.left - m.l) / (rect.width - m.l - m.r);
+    R.t = Math.min(R.tmax, Math.max(0, frac * R.tmax)); paint();
+  };
+  gantt.addEventListener("pointerdown", (e) => { gantt.setPointerCapture(e.pointerId); gantt._drag = true; pointer(e); });
+  gantt.addEventListener("pointermove", (e) => { if (gantt._drag) pointer(e); });
+  gantt.addEventListener("pointerup", () => { gantt._drag = false; });
+  observeSize(gantt, (W) => { drawGantt(d, i, W); paint(); });
+  for (const sel of [`[data-top="${i}"]`, `[data-side="${i}"]`]) {
+    const cv = $(sel);
+    observeSize(cv.parentElement, (W) => sizeCanvas(cv, W, sel.includes("top") ? Math.min(380, Math.max(220, W / 2)) : 74));
+  }
+}
+function sizeCanvas(cv, W, H) {
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+  cv.style.height = H + "px";
+  cv._dpr = dpr;
+  paint();
+}
+
+const ganttMargins = () => ({ l: 8, r: 8, t: 38, b: 22 });
+function drawGantt(d, i, W) {
+  const m = ganttMargins(), laneH = 22, H = m.t + m.b + d.nLanes * laneH + 6;
+  const iw = W - m.l - m.r, X = (t) => m.l + (t / R.tmax) * iw;
+  const sc = d.scenario, tEnd = d.trajectory.t.at(-1) ?? 0;
+  const evt = d.events.find((e) => e.kind === "obstacle");
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Decision timeline"><defs>
+    <clipPath id="clip${i}"><rect x="${m.l}" y="0" width="${iw}" height="${H}"/></clipPath>
+    <pattern id="hatch${i}" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="var(--danger-soft)"/><line x1="0" y1="0" x2="0" y2="6" stroke="var(--danger)" stroke-width="1" opacity=".5"/></pattern></defs>`;
+  const step = R.tmax > 30 ? 5 : R.tmax > 12 ? 2 : 1;
+  for (let t = 0; t <= R.tmax + 1e-6; t += step) s += `<line class="gridline" x1="${X(t)}" x2="${X(t)}" y1="${m.t}" y2="${H - m.b}"/><text x="${X(t)}" y="${H - 6}" text-anchor="middle">${t} s</text>`;
+  if (evt && sc.budget_s > 0) {
+    const x0 = X(evt.t), x1 = X(Math.min(R.tmax, evt.t + sc.budget_s));
+    s += `<rect x="${x0}" y="${m.t}" width="${Math.max(2, x1 - x0)}" height="${H - m.t - m.b}" fill="url(#hatch${i})"><title>Reaction budget ${fmtMs(sc.budget_s * 1000)}</title></rect>`;
+  }
+  s += `<g clip-path="url(#clip${i})">`;
+  for (const x of d.lanes) {
+    const y = m.t + x.lane * laneH + 3, x0 = X(x.t_obs), x1 = Math.max(x0 + 2, X(x.t_apply)), w = x1 - x0;
+    const color = x.source === "shield" ? "var(--src-shield)" : x.source === "fallback" || !x.valid ? "var(--src-fallback)" : "var(--src-model)";
+    const lat = (x.t_apply - x.t_obs) * 1000;
+    const tip = `<b>#${x.seq} ${esc(x.source)}</b>${x.valid ? "" : " (invalid)"}<br>sent ${x.t_obs.toFixed(3)} s → applied ${x.t_apply.toFixed(3)} s<br>delay <b>${fmtMs(lat)}</b> · own latency ${fmtMs(x.latency_ms)}<br>applied <b>${esc(x.applied_action_name)}</b>`;
+    s += `<g data-tip="${esc(tip)}"><rect x="${x0}" y="${y}" width="${w}" height="${laneH - 7}" rx="3" fill="${color}" opacity="${x.valid ? 0.9 : 0.7}"/>
+      <path d="M${x1 - 0.5},${y - 1}l4,${(laneH - 7) / 2 + 1}l-4,${(laneH - 7) / 2 + 1}z" fill="${color}"/>`;
+    const label = lat < 10 ? "" : fmtMs(lat);
+    if (label && w > label.length * 6.3 + 6) s += `<text class="in" x="${x0 + w / 2}" y="${y + 11}" text-anchor="middle">${label}</text>`;
+    else if (label && x.lane === 0 && w > 4 && label) s += `<text x="${x1 + 6}" y="${y + 11}">${label}</text>`;
+    s += `</g>`;
+  }
+  s += `</g>`;
+  if (evt) s += `<line x1="${X(evt.t)}" x2="${X(evt.t)}" y1="${m.t - 24}" y2="${H - m.b}" stroke="var(--danger)" stroke-dasharray="3 3"/><text x="${X(evt.t) + 4}" y="${m.t - 18}" style="fill:var(--danger)">obstacle appears</text>`;
+  const endEv = d.events.find((e) => ["collision", "goal", "end"].includes(e.kind));
+  if (endEv) {
+    const x = X(endEv.t), c = endEv.kind === "collision" ? "var(--danger)" : "var(--ok)";
+    s += `<line x1="${x}" x2="${x}" y1="${m.t - 10}" y2="${H - m.b}" stroke="${c}" stroke-width="2"/><text x="${x + 80 > W ? x - 4 : x + 4}" y="${m.t - 3}" text-anchor="${x + 80 > W ? "end" : "start"}" style="fill:${c};font-weight:600">${esc(endEv.label)}</text>`;
+  }
+  for (const e of d.events.filter((e) => e.kind === "shield")) s += `<path d="M${X(e.t)},${H - m.b + 2}l5,-9h-10z" fill="var(--src-shield)"><title>${esc(e.label)} at ${e.t.toFixed(2)} s</title></path>`;
+  gantt_set(i, s + `</svg><div class="playhead" id="ph${i}"></div>`);
+}
+function gantt_set(i, html) { $(`[data-gantt="${i}"]`).innerHTML = html; }
+
+function sampleAt(tr, t) {
+  const T = tr.t, n = T.length;
+  if (!n) return null;
+  let lo = 0, hi = n - 1;
+  if (t >= T[hi]) lo = hi; else if (t > T[0]) { while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (T[mid] <= t) lo = mid; else hi = mid; } }
+  const j = Math.min(n - 1, lo + 1), span = T[j] - T[lo], u = span > 0 ? Math.min(1, Math.max(0, (t - T[lo]) / span)) : 0;
+  const lerp = (arr) => { const a = arr[lo], b = arr[j]; return a == null ? null : b == null ? a : a + (b - a) * u; };
+  return {
+    i: lo, x: lerp(tr.x), y: lerp(tr.y), z: lerp(tr.z), rx: lerp(tr.rx), ry: lerp(tr.ry), rz: lerp(tr.rz),
+    ox: lerp(tr.ox), oy: lerp(tr.oy), oz: tr.oz[lo], orad: tr.orad[lo], clearance: lerp(tr.clearance),
+    action: tr.action[lo], shield: tr.shield[lo], ended: t >= T[n - 1],
+  };
+}
+
+function paint() {
+  if (!R.data.length || !$("#scrub")) return;
+  $("#scrub").value = R.t;
+  $("#clock").textContent = `t = ${R.t.toFixed(2)} s / ${R.tmax.toFixed(2)} s`;
+  $("#btnPlay").textContent = R.playing ? "⏸ Pause" : (R.t >= R.tmax - 1e-6 ? "↺ Replay" : "▶ Play");
+  R.data.forEach((d, i) => {
+    const t = Math.min(R.t, d.trajectory.t.at(-1) ?? 0);
+    const s = sampleAt(d.trajectory, t);
+    drawTop(d, i, s, t); drawSide(d, i, s, t); updateChip(d, i, s, R.t);
+    const ph = $(`#ph${i}`), g = $(`[data-gantt="${i}"]`);
+    if (ph && g) { const m = ganttMargins(); ph.style.left = (m.l + (R.t / R.tmax) * (g.clientWidth - m.l - m.r) - 1) + "px"; }
+  });
+}
+
+function updateChip(d, i, s, tGlobal) {
+  const chip = $(`[data-chip="${i}"]`);
+  if (!chip || !s) return;
+  const last = d.lanes.filter((x) => x.t_apply <= tGlobal).sort((a, b) => b.t_apply - a.t_apply)[0];
+  const inflight = d.lanes.filter((x) => x.t_obs <= tGlobal && x.t_apply > tGlobal).length;
+  const shield = s.shield === 1;
+  chip.className = "chip" + (shield ? " shield" : "");
+  chip.innerHTML = `<small>current action</small><b>${ACTIONS[s.action] ?? "–"}</b><small>${shield ? "shield override" : last ? `decision #${last.seq} · ${esc(last.source)}` : "no decision yet"}${inflight ? ` · ${inflight} in flight` : ""}</small>`;
+  $(`[data-alt="${i}"]`).textContent = s.z != null ? `z = ${s.z.toFixed(2)} m` : "";
+}
+
+function drawTop(d, i, s, t) {
+  const cv = $(`[data-top="${i}"]`);
+  if (!cv || !cv._dpr || !s) return;
+  const ctx = cv.getContext("2d"), dpr = cv._dpr, W = cv.width / dpr, H = cv.height / dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  const cGrid = css("--grid"), cMuted = css("--muted"), cText = css("--text"), cDanger = css("--danger"), cAccent = armCss(d.flight.arm_id), cShield = css("--src-shield"), cOk = css("--ok");
+  const viewH = 7, k = H / viewH, viewW = W / k, cx = s.x + viewW * 0.22;
+  const X = (x) => (x - (cx - viewW / 2)) * k, Y = (y) => H / 2 - y * k;
+  ctx.font = "11px system-ui"; ctx.textBaseline = "top";
+  ctx.strokeStyle = cGrid; ctx.lineWidth = 1; ctx.fillStyle = cMuted;
+  for (let gx = Math.ceil(cx - viewW / 2); gx <= cx + viewW / 2; gx++) {
+    const px = X(gx); ctx.beginPath(); ctx.moveTo(px, 0); ctx.lineTo(px, H); ctx.stroke();
+    if (gx % 5 === 0) ctx.fillText(gx + " m", px + 3, H - 15);
+  }
+  for (let gy = -Math.floor(viewH / 2); gy <= Math.floor(viewH / 2); gy++) { const py = Y(gy); ctx.beginPath(); ctx.moveTo(0, py); ctx.lineTo(W, py); ctx.stroke(); }
+  ctx.setLineDash([6, 5]); ctx.strokeStyle = cMuted; ctx.globalAlpha = .6; ctx.beginPath(); ctx.moveTo(0, Y(0)); ctx.lineTo(W, Y(0)); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+  if (d.goalX != null) { const gx = X(d.goalX); ctx.strokeStyle = cOk; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke(); ctx.fillStyle = cOk; ctx.fillText("GOAL", gx + 5, 5); ctx.lineWidth = 1; }
+  // obstacle
+  if (s.orad != null && s.ox != null) {
+    ctx.beginPath(); ctx.arc(X(s.ox), Y(s.oy), s.orad * k, 0, Math.PI * 2);
+    ctx.fillStyle = cDanger; ctx.globalAlpha = .22; ctx.fill(); ctx.globalAlpha = 1; ctx.strokeStyle = cDanger; ctx.lineWidth = 2; ctx.stroke(); ctx.lineWidth = 1;
+    ctx.fillStyle = cDanger; ctx.fillText(`obstacle r=${s.orad.toFixed(2)} m`, X(s.ox) - 42, Y(s.oy) + s.orad * k + 6);
+  }
+  // trail, shield segments
+  const tr = d.trajectory; ctx.lineJoin = "round";
+  ctx.strokeStyle = cAccent; ctx.lineWidth = 2.5; ctx.beginPath();
+  for (let n = 0; n <= s.i; n++) { const px = X(tr.x[n]), py = Y(tr.y[n]); n ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
+  ctx.lineTo(X(s.x), Y(s.y)); ctx.stroke();
+  ctx.strokeStyle = cShield; ctx.lineWidth = 5; ctx.beginPath(); let pen = false;
+  for (let n = 0; n <= s.i; n++) { if (tr.shield[n] === 1) { const px = X(tr.x[n]), py = Y(tr.y[n]); pen ? ctx.lineTo(px, py) : ctx.moveTo(px, py); pen = true; } else pen = false; }
+  ctx.stroke(); ctx.lineWidth = 1;
+  // shield markers
+  for (const e of d.events.filter((e) => e.kind === "shield" && e.t <= t)) {
+    const q = sampleAt(tr, e.t); const px = X(q.x), py = Y(q.y);
+    ctx.fillStyle = cShield; ctx.beginPath(); ctx.moveTo(px, py - 11); ctx.lineTo(px + 7, py - 4); ctx.lineTo(px + 5, py + 5); ctx.lineTo(px, py + 9); ctx.lineTo(px - 5, py + 5); ctx.lineTo(px - 7, py - 4); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = cText; ctx.fillText("shield", px - 14, py + 13);
+  }
+  // reference carrot
+  if (s.rx != null) {
+    ctx.strokeStyle = cMuted; ctx.setLineDash([2, 3]); ctx.beginPath(); ctx.moveTo(X(s.x), Y(s.y)); ctx.lineTo(X(s.rx), Y(s.ry)); ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle = cText; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(X(s.rx), Y(s.ry), 4.5, 0, Math.PI * 2); ctx.stroke(); ctx.lineWidth = 1;
+  }
+  // drone
+  const ahead = tr.x[Math.min(tr.x.length - 1, s.i + 1)] - tr.x[s.i], lat = tr.y[Math.min(tr.y.length - 1, s.i + 1)] - tr.y[s.i];
+  const ang = Math.atan2(-lat, ahead || 1e-6);
+  ctx.save(); ctx.translate(X(s.x), Y(s.y)); ctx.rotate(ang);
+  ctx.fillStyle = cAccent; ctx.strokeStyle = css("--surface"); ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(14, 0); ctx.lineTo(-10, 9); ctx.lineTo(-5, 0); ctx.lineTo(-10, -9); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();
+  if (s.clearance != null && !s.ended) { ctx.fillStyle = s.clearance < 0.5 ? cDanger : cText; ctx.fillText(`clearance ${s.clearance.toFixed(2)} m`, X(s.x) - 36, Y(s.y) - 30); }
+  // collision burst
+  if (s.ended && d.flight.collision) {
+    const px = X(s.x), py = Y(s.y); ctx.strokeStyle = cDanger; ctx.lineWidth = 4;
+    for (let a = 0; a < 8; a++) { const r0 = 10, r1 = a % 2 ? 20 : 28, an = (a * Math.PI) / 4; ctx.beginPath(); ctx.moveTo(px + Math.cos(an) * r0, py + Math.sin(an) * r0); ctx.lineTo(px + Math.cos(an) * r1, py + Math.sin(an) * r1); ctx.stroke(); }
+    ctx.lineWidth = 1; ctx.fillStyle = cDanger; ctx.font = "bold 13px system-ui"; ctx.fillText("COLLISION", px - 32, py - 46);
+  } else if (s.ended && d.flight.success) { ctx.fillStyle = cOk; ctx.font = "bold 13px system-ui"; ctx.fillText("GOAL REACHED", X(s.x) - 45, Y(s.y) - 30); }
+}
+function armCss(id) { const i = state.armIds.indexOf(id); return css(`--c${(i < 0 ? 7 : i) % 8}`); }
+
+function drawSide(d, i, s, t) {
+  const cv = $(`[data-side="${i}"]`);
+  if (!cv || !cv._dpr || !s) return;
+  const ctx = cv.getContext("2d"), dpr = cv._dpr, W = cv.width / dpr, H = cv.height / dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+  const cGrid = css("--grid"), cMuted = css("--muted"), cDanger = css("--danger"), cOk = css("--ok"), color = armCss(d.flight.arm_id);
+  const xmax = Math.max(d.maxX, 1) * 1.03, zmax = 2.4, padL = 30, padB = 14;
+  const X = (x) => padL + (x / xmax) * (W - padL - 8), Z = (z) => H - padB - (z / zmax) * (H - padB - 6);
+  ctx.font = "10px system-ui"; ctx.textBaseline = "middle"; ctx.fillStyle = cMuted; ctx.strokeStyle = cGrid;
+  for (const z of [0, 1, 2]) { ctx.beginPath(); ctx.moveTo(padL, Z(z)); ctx.lineTo(W - 8, Z(z)); ctx.stroke(); ctx.fillText(z + " m", 2, Z(z)); }
+  for (let x = 0; x <= xmax; x += 10) { ctx.beginPath(); ctx.moveTo(X(x), 4); ctx.lineTo(X(x), H - padB); ctx.stroke(); ctx.fillText(x + "", X(x) - 4, H - 5); }
+  if (d.goalX != null) { ctx.strokeStyle = cOk; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(X(d.goalX), 4); ctx.lineTo(X(d.goalX), H - padB); ctx.stroke(); ctx.lineWidth = 1; }
+  const tr = d.trajectory;
+  let oi = -1; for (let n = Math.min(s.i, tr.t.length - 1); n >= 0; n--) if (tr.orad[n] != null) { oi = n; break; }
+  if (oi >= 0) { ctx.fillStyle = cDanger; ctx.globalAlpha = .28; const r = tr.orad[oi]; ctx.fillRect(X(tr.ox[oi] - r), Z(tr.oz[oi] + r), X(tr.ox[oi] + r) - X(tr.ox[oi] - r), Z(tr.oz[oi] - r) - Z(tr.oz[oi] + r)); ctx.globalAlpha = 1; ctx.strokeStyle = cDanger; ctx.strokeRect(X(tr.ox[oi] - r), Z(tr.oz[oi] + r), X(tr.ox[oi] + r) - X(tr.ox[oi] - r), Z(tr.oz[oi] - r) - Z(tr.oz[oi] + r)); }
+  ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.beginPath();
+  for (let n = 0; n <= s.i; n++) n ? ctx.lineTo(X(tr.x[n]), Z(tr.z[n])) : ctx.moveTo(X(tr.x[n]), Z(tr.z[n]));
+  ctx.lineTo(X(s.x), Z(s.z)); ctx.stroke(); ctx.lineWidth = 1;
+  ctx.fillStyle = color; ctx.strokeStyle = css("--surface"); ctx.beginPath(); ctx.arc(X(s.x), Z(s.z), 5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+}
+
+/* transport */
+function togglePlay() {
+  if (R.playing) { R.playing = false; cancelAnimationFrame(R.raf); paint(); return; }
+  if (R.t >= R.tmax - 1e-6) R.t = 0;
+  R.playing = true; R.last = performance.now();
+  const loop = (now) => {
+    if (!R.playing) return;
+    R.t = Math.min(R.tmax, R.t + ((now - R.last) / 1000) * R.speed); R.last = now;
+    if (R.t >= R.tmax) R.playing = false;
+    paint();
+    if (R.playing) R.raf = requestAnimationFrame(loop);
+  };
+  R.raf = requestAnimationFrame(loop);
+  paint();
+}
+function step(dir) {
+  R.playing = false; cancelAnimationFrame(R.raf);
+  const hz = R.data[0]?.hz || 24;
+  R.t = Math.min(R.tmax, Math.max(0, R.t + dir / hz)); paint();
+}
+document.addEventListener("keydown", (e) => {
+  if (state.route !== "replay" || !R.data.length || /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName) && e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+  if (e.target.tagName === "INPUT" && e.target.type !== "range") return;
+  if (e.key === " ") { e.preventDefault(); togglePlay(); }
+  else if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+  else if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
+});
+
+/* ================================================================ router */
+async function route() {
+  const hash = location.hash.replace(/^#/, "") || "overview";
+  const [tab, arg] = hash.split("/");
+  state.route = ["overview", "flights", "replay"].includes(tab) ? tab : "overview";
+  document.querySelectorAll("nav.tabs a").forEach((a) => (a.dataset.tab === state.route ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current")));
+  cancelAnimationFrame(R.raf); R.playing = false;
+  if (state.route !== "replay") R.data = [];
+  if (state.route === "overview") await loadOverview();
+  else if (state.route === "flights") await loadFlights();
+  else await loadReplay((arg || "").split(",").map(Number).filter(Boolean).slice(0, 2));
+}
+
+async function changeExperiment(id) {
+  state.expId = id; state.results = null; state.flights = { page: 1, filters: {}, data: null, selected: [] };
+  localStorageSet("exp", id);
+  try { await loadProgress(); } catch { state.progress = null; renderProgress(); }
+  startSSE();
+  await route();
+}
+
+async function init() {
+  window.addEventListener("hashchange", route);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { if (state.route === "overview" && state.results) renderOverview(); else if (state.route === "replay") { renderReplay(); } else route(); });
+  $("#expSelect").addEventListener("change", (e) => changeExperiment(Number(e.target.value)));
+  $("#scopeSelect").addEventListener("change", (e) => { state.scope = e.target.value; state.budgets = null; loadOverview(); });
+  try {
+    await loadExperiments();
+    if (state.expId != null) { await loadProgress(); startSSE(); } else renderProgress();
+  } catch (err) {
+    $("#view").innerHTML = `<div class="banner">Could not reach the API: ${esc(err.message)}</div>`;
+    return;
+  }
+  await route();
+}
+init();
+</script>
+</body>
+</html>

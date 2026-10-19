@@ -1,0 +1,20 @@
+{
+  "scenario_seed": 5512,
+  "frames": 423,
+  "sides": [
+    {
+      "flight_id": 20269,
+      "label": "injected latency 0 ms",
+      "outcome": "gates_done",
+      "success": true,
+      "task": {}
+    },
+    {
+      "flight_id": 20272,
+      "label": "injected latency 200 ms",
+      "outcome": "gates_done",
+      "success": false,
+      "task": {}
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+---
+description: Always-on pointer to the repo's canonical instructions file
+globs:
+alwaysApply: true
+---
+
+This repository's coding conventions, architecture notes, and workflow rules live in
+@.github/copilot-instructions.md
+
+Read and follow that file for every task in this repo. It is the single source of
+truth (also consumed natively by GitHub Copilot, and pointed to by `AGENTS.md` /
+`CLAUDE.md` for Codex and Claude Code). Do not duplicate its guidance here — update
+`.github/copilot-instructions.md` instead.

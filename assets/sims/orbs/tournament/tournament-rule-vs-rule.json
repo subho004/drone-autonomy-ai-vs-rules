@@ -1,0 +1,20 @@
+[
+  {
+    "flight": "T_pilot_pn_s9010",
+    "label": "drone 0 ms | homing orbs",
+    "outcome": "landed_on_pad",
+    "success": true
+  },
+  {
+    "flight": "T_pilot_pursuit_s9010",
+    "label": "drone 0 ms | pursuit orbs",
+    "outcome": "collision",
+    "success": false
+  },
+  {
+    "flight": "T_navreflex_pursuit_s9010",
+    "label": "drone 0 ms | pursuit orbs",
+    "outcome": "collision",
+    "success": false
+  }
+]

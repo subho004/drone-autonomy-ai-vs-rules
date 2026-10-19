@@ -1,0 +1,26 @@
+{
+  "scenario_seed": 5411,
+  "frames": 333,
+  "sides": [
+    {
+      "flight_id": 19975,
+      "label": "injected latency 0 ms",
+      "outcome": "landed_safe",
+      "success": true,
+      "task": {
+        "chosen_site": 2.0,
+        "miss_m": -1.0762941471069607
+      }
+    },
+    {
+      "flight_id": 19978,
+      "label": "injected latency 1000 ms",
+      "outcome": "landed_off_site",
+      "success": false,
+      "task": {
+        "chosen_site": 2.0,
+        "miss_m": 0.7942359400212835
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "flight": "A_pursuit_d0_o0_s6006",
+    "label": "rule dodger vs rule chaser",
+    "outcome": "landed_on_pad",
+    "success": true
+  },
+  {
+    "flight": "C_pilot_llm_s6006",
+    "label": "drone 0 ms | small-model orbs (660 ms)",
+    "outcome": "landed_on_pad",
+    "success": true
+  },
+  {
+    "flight": "B_mercury_llm_s6006",
+    "label": "drone 497 ms | small-model orbs (673 ms)",
+    "outcome": "crash",
+    "success": false
+  }
+]

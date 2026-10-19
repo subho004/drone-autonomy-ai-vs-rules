@@ -1,0 +1,26 @@
+# A9 urban canyon with gusts (negative control + block).
+name: sim_canyon
+notes: A9 urban canyon with gusts (negative control + block).
+suite:
+  name: canyon
+  kind: canyon
+  n: 24
+  base_seed: 5600
+latency_sweep_ms:
+- 0
+- 100
+- 300
+- 600
+- 1000
+shield:
+- 0
+cadence:
+- sequential
+reps: 1
+arms:
+- id: fsm
+  kind: fsm
+  measured: false
+- id: oracle
+  kind: oracle
+  measured: false

@@ -1,0 +1,24 @@
+# A1 follow-me: reference tracker under injected latency.
+name: sim_follow
+notes: 'A1 follow-me: reference tracker under injected latency.'
+suite:
+  name: follow
+  kind: follow
+  n: 24
+  base_seed: 5100
+latency_sweep_ms:
+- 0
+- 100
+- 300
+- 600
+- 1000
+- 1500
+shield:
+- 0
+cadence:
+- sequential
+reps: 1
+arms:
+- id: follow_pilot
+  kind: follow_pilot
+  measured: false

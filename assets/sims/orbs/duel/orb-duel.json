@@ -1,0 +1,14 @@
+[
+  {
+    "flight": "B_mercury_llm_s6005",
+    "label": "drone 497 ms | small-model orbs (668 ms)",
+    "outcome": "landed_on_pad",
+    "success": true
+  },
+  {
+    "flight": "B_mercury_pursuit_s6005",
+    "label": "drone 521 ms | pursuit orbs",
+    "outcome": "crash",
+    "success": false
+  }
+]

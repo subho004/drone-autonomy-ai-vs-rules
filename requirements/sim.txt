@@ -1,0 +1,6 @@
+# Simulation worker env. pybullet + gym-pybullet-drones are installed by scripts/setup_sim_env.sh
+-r core.txt
+scipy>=1.18.1
+gymnasium>=1.3.0
+transforms3d
+pyarrow>=25.0.1

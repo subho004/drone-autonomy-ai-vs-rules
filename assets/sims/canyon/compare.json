@@ -1,0 +1,20 @@
+{
+  "scenario_seed": 5616,
+  "frames": 404,
+  "sides": [
+    {
+      "flight_id": 20401,
+      "label": "block ahead, 0 ms",
+      "outcome": "success",
+      "success": true,
+      "task": {}
+    },
+    {
+      "flight_id": 20402,
+      "label": "block ahead, 100 ms",
+      "outcome": "collision",
+      "success": false,
+      "task": {}
+    }
+  ]
+}

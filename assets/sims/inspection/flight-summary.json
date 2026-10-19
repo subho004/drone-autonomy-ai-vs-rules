@@ -1,0 +1,67 @@
+{
+ "model": "gpt-4o-mini",
+ "resolution": 128,
+ "outcome": "landed_on_pad",
+ "t_end": 21.458333333333332,
+ "events": [
+  {
+   "t": 4.833333333333333,
+   "kind": "scanned",
+   "station": 0
+  },
+  {
+   "t": 10.145833333333332,
+   "kind": "scanned",
+   "station": 1
+  },
+  {
+   "t": 15.520833333333332,
+   "kind": "scanned",
+   "station": 2
+  }
+ ],
+ "verdicts": [
+  {
+   "station": 0,
+   "panel_index": 2,
+   "t_event": 4.833333333333333,
+   "model": "gpt-4o-mini",
+   "resolution": 128,
+   "answer": "YES",
+   "verdict": true,
+   "truth": true,
+   "latency_ms": 1310.534458,
+   "cost_usd": 0.00043575,
+   "tokens_in": 2901,
+   "tokens_out": 1
+  },
+  {
+   "station": 1,
+   "panel_index": 4,
+   "t_event": 10.145833333333332,
+   "model": "gpt-4o-mini",
+   "resolution": 128,
+   "answer": "NO",
+   "verdict": false,
+   "truth": false,
+   "latency_ms": 976.242084,
+   "cost_usd": 0.00043575,
+   "tokens_in": 2901,
+   "tokens_out": 1
+  },
+  {
+   "station": 2,
+   "panel_index": 6,
+   "t_event": 15.520833333333332,
+   "model": "gpt-4o-mini",
+   "resolution": 128,
+   "answer": "YES",
+   "verdict": true,
+   "truth": true,
+   "latency_ms": 949.5635,
+   "cost_usd": 0.00043575,
+   "tokens_in": 2901,
+   "tokens_out": 1
+  }
+ ]
+}

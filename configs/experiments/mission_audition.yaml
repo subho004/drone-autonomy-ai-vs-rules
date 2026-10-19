@@ -1,0 +1,42 @@
+# Model audition on multi-task missions: visit and scan three stations, dodge obstacles and an
+# intruder on the way, land on the pad. Every mission is certified completable by the
+# rule-based mission pilot. The best model here flies the README demo.
+name: mission_audition
+notes: Candidate decision models flying the same certified missions at their measured latency.
+suite:
+  name: missions
+  kind: mission
+  n: 12
+  base_seed: 3000
+latency_sweep_ms: []
+shield: [0, 1]
+cadence: [sequential]
+reps: 1
+arms:
+  - {id: mission_fsm, kind: mission_fsm, sweep: false, measured: true}
+  - id: jev
+    provider: decisions_endpoint
+    model: typesafe/jev-1.13
+    pool: api
+    sweep: false
+    measured: true
+  - id: mercury
+    provider: decisions_endpoint
+    model: inception/mercury-decide:free
+    pool: api
+    sweep: false
+    measured: true
+  - id: gpt-4o-mini
+    provider: openai_chat
+    model: gpt-4o-mini
+    pool: api
+    config: {top_logprobs: 20}
+    sweep: false
+    measured: true
+  - id: gemini-flash-lite
+    provider: gemini
+    model: gemini-3.5-flash-lite
+    pool: api
+    config: {thinking_level: minimal, max_output_tokens: 16}
+    sweep: false
+    measured: true

@@ -1,0 +1,83 @@
+{
+  "cells": [
+    {
+      "experiment": "sim_gates",
+      "arm": "gate_pilot",
+      "shield": 0,
+      "latency_ms": 0.0,
+      "variant": "",
+      "n": 24,
+      "success": 1.0,
+      "success_lo": 0.8620237953250198,
+      "success_hi": 1.0,
+      "collision": 0.0,
+      "metric_mean": 5.0
+    },
+    {
+      "experiment": "sim_gates",
+      "arm": "gate_pilot",
+      "shield": 0,
+      "latency_ms": 50.0,
+      "variant": "",
+      "n": 24,
+      "success": 1.0,
+      "success_lo": 0.8620237953250198,
+      "success_hi": 1.0,
+      "collision": 0.0,
+      "metric_mean": 5.0
+    },
+    {
+      "experiment": "sim_gates",
+      "arm": "gate_pilot",
+      "shield": 0,
+      "latency_ms": 100.0,
+      "variant": "",
+      "n": 24,
+      "success": 1.0,
+      "success_lo": 0.8620237953250198,
+      "success_hi": 1.0,
+      "collision": 0.0,
+      "metric_mean": 5.0
+    },
+    {
+      "experiment": "sim_gates",
+      "arm": "gate_pilot",
+      "shield": 0,
+      "latency_ms": 200.0,
+      "variant": "",
+      "n": 24,
+      "success": 0.0,
+      "success_lo": 1.3877787807814457e-17,
+      "success_hi": 0.13797620467498017,
+      "collision": 0.0,
+      "metric_mean": 2.9583333333333335
+    },
+    {
+      "experiment": "sim_gates",
+      "arm": "gate_pilot",
+      "shield": 0,
+      "latency_ms": 300.0,
+      "variant": "",
+      "n": 24,
+      "success": 0.0,
+      "success_lo": 1.3877787807814457e-17,
+      "success_hi": 0.13797620467498017,
+      "collision": 0.0,
+      "metric_mean": 3.0
+    },
+    {
+      "experiment": "sim_gates",
+      "arm": "gate_pilot",
+      "shield": 0,
+      "latency_ms": 500.0,
+      "variant": "",
+      "n": 24,
+      "success": 0.0,
+      "success_lo": 1.3877787807814457e-17,
+      "success_hi": 0.13797620467498017,
+      "collision": 0.0,
+      "metric_mean": 1.2916666666666667
+    }
+  ],
+  "paired": []
+}

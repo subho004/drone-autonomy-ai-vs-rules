@@ -1,0 +1,21 @@
+# A5: where does a human sit on the latency curve? The FSM rule is flown with a human-like
+# reaction time (lognormal around 200/300/450 ms, sigma 0.4) on the SAME scenarios the live
+# models flew (suite live-range), so results pair by scenario id with the live experiment.
+name: human_baseline
+notes: Synthetic human reaction-time traces on the FSM rule, same scenarios as the live models.
+suite:
+  name: live-range
+  n: 60
+  base_seed: 20000
+  budget_min_s: 0.4
+  budget_max_s: 4.0
+  mix: {obstacle_static: 0.4, obstacle_approach: 0.3, intruder_cross: 0.2, battery_critical: 0.05, gps_loss: 0.05}
+  n_impossible: 0
+latency_sweep_ms: [0, 550, 1000]
+latency_sampled_ms: [200, 300, 450]
+shield: [0, 1]
+cadence: [sequential]
+reps: 1
+arms:
+  - {id: fsm_machine, kind: fsm, sweep: true, measured: false}
+  - {id: fsm_human, kind: fsm, sweep: false, measured: false, sampled: true, config: {sigma: 0.4}}

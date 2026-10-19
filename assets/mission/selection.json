@@ -1,0 +1,122 @@
+{
+  "winner": [
+    "mercury",
+    1
+  ],
+  "flights": {
+    "winner": 18114,
+    "jev": 18088
+  },
+  "audition": [
+    {
+      "arm_id": "mission_fsm",
+      "shield": 0,
+      "provider": "classical",
+      "n": 12,
+      "success": 1.0,
+      "scanned": 3.0,
+      "collision": 0.0,
+      "lat_ms": 0.002972705261209553,
+      "t_end": 37.83506944444444
+    },
+    {
+      "arm_id": "mission_fsm",
+      "shield": 1,
+      "provider": "classical",
+      "n": 12,
+      "success": 0.75,
+      "scanned": 2.8333333333333335,
+      "collision": 0.25,
+      "lat_ms": 0.0029270624091142544,
+      "t_end": 33.880208333333336
+    },
+    {
+      "arm_id": "mercury",
+      "shield": 1,
+      "provider": "decisions_endpoint",
+      "n": 12,
+      "success": 0.4166666666666667,
+      "scanned": 2.4166666666666665,
+      "collision": 0.5833333333333334,
+      "lat_ms": 547.8907918889373,
+      "t_end": 29.0
+    },
+    {
+      "arm_id": "jev",
+      "shield": 1,
+      "provider": "decisions_endpoint",
+      "n": 12,
+      "success": 0.3333333333333333,
+      "scanned": 2.0,
+      "collision": 0.4166666666666667,
+      "lat_ms": 554.3196449752843,
+      "t_end": 29.944444444444443
+    },
+    {
+      "arm_id": "mercury",
+      "shield": 0,
+      "provider": "decisions_endpoint",
+      "n": 12,
+      "success": 0.08333333333333333,
+      "scanned": 1.9166666666666667,
+      "collision": 0.9166666666666666,
+      "lat_ms": 579.8206185503947,
+      "t_end": 21.671875
+    },
+    {
+      "arm_id": "jev",
+      "shield": 0,
+      "provider": "decisions_endpoint",
+      "n": 12,
+      "success": 0.08333333333333333,
+      "scanned": 1.8333333333333333,
+      "collision": 0.5833333333333334,
+      "lat_ms": 551.01307809104,
+      "t_end": 21.524305555555554
+    },
+    {
+      "arm_id": "gemini-flash-lite",
+      "shield": 1,
+      "provider": "gemini",
+      "n": 12,
+      "success": 0.0,
+      "scanned": 0.4166666666666667,
+      "collision": 0.5833333333333334,
+      "lat_ms": 1007.2236563258639,
+      "t_end": 33.54861111111111
+    },
+    {
+      "arm_id": "gemini-flash-lite",
+      "shield": 0,
+      "provider": "gemini",
+      "n": 12,
+      "success": 0.0,
+      "scanned": 0.25,
+      "collision": 0.8333333333333334,
+      "lat_ms": 1059.9172247816073,
+      "t_end": 13.932291666666666
+    },
+    {
+      "arm_id": "gpt-4o-mini",
+      "shield": 0,
+      "provider": "openai_chat",
+      "n": 12,
+      "success": 0.0,
+      "scanned": 0.0,
+      "collision": 1.0,
+      "lat_ms": 706.6032436217902,
+      "t_end": 24.973958333333332
+    },
+    {
+      "arm_id": "gpt-4o-mini",
+      "shield": 1,
+      "provider": "openai_chat",
+      "n": 12,
+      "success": 0.0,
+      "scanned": 0.0,
+      "collision": 1.0,
+      "lat_ms": 672.7161779462441,
+      "t_end": 25.840277777777775
+    }
+  ]
+}

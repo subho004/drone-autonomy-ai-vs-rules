@@ -1,0 +1,20 @@
+{
+  "scenario_seed": 20066,
+  "frames": 263,
+  "sides": [
+    {
+      "flight_id": 21479,
+      "label": "raw, 400 ms",
+      "outcome": "collision",
+      "success": false,
+      "task": {}
+    },
+    {
+      "flight_id": 21839,
+      "label": "predictive, 400 ms",
+      "outcome": "success",
+      "success": true,
+      "task": {}
+    }
+  ]
+}

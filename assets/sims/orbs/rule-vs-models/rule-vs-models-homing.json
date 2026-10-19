@@ -1,0 +1,20 @@
+[
+  {
+    "flight": "A_pn_d0_s6005",
+    "label": "rule-based pilot, 0 ms",
+    "outcome": "landed_on_pad",
+    "success": true
+  },
+  {
+    "flight": "B_mercury_pn_s6005",
+    "label": "drone 559 ms | homing orbs",
+    "outcome": "crash",
+    "success": false
+  },
+  {
+    "flight": "B_jev_pn_s6005",
+    "label": "drone 521 ms | homing orbs",
+    "outcome": "crash",
+    "success": false
+  }
+]

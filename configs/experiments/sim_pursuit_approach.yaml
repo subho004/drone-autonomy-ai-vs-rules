@@ -1,0 +1,31 @@
+# A3 paired straight-line intruder on the same seeds.
+name: sim_pursuit_approach
+notes: A3 paired straight-line intruder on the same seeds.
+suite:
+  name: pursuit-approach
+  kind: pursuit
+  n: 24
+  base_seed: 5300
+latency_sweep_ms:
+- 0
+- 100
+- 200
+- 300
+- 500
+- 800
+- 1200
+shield:
+- 0
+cadence:
+- sequential
+reps: 1
+arms:
+- id: oracle
+  kind: oracle
+  measured: false
+- id: fsm
+  kind: fsm
+  measured: false
+- id: reflex_ttc
+  kind: reflex_ttc
+  measured: false

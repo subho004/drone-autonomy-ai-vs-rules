@@ -1,0 +1,47 @@
+{
+  "protocol": "random search, equal budget, held-out tune suite",
+  "tune_suite": "tune",
+  "tune_seed": 50000,
+  "n_scenarios": 60,
+  "latencies_ms": [
+    0.0,
+    200.0
+  ],
+  "n_trials": 60,
+  "arms": {
+    "fsm": {
+      "params": {
+        "t_lat_s": 0.07088778498438948,
+        "a_brk": 3.8897814189179947,
+        "margin_m": 0.354797416492491,
+        "trigger_extra_m": 2.4890276809613785,
+        "commit_s": 0.9475778549354474,
+        "near_m": 3.41375322379309
+      },
+      "objective": 0.4225,
+      "collision_rate": 0.325,
+      "success_rate": 0.675,
+      "default_objective": 0.5633333333333334,
+      "default_collision_rate": 0.43333333333333335,
+      "default_success_rate": 0.5666666666666667,
+      "trials": 61
+    },
+    "reflex_ttc": {
+      "params": {
+        "t_lat_s": 0.12653898773690292,
+        "a_brk": 1.5791889034463167,
+        "margin_m": 0.6892424401546877,
+        "trigger_extra_m": 2.3590757482137477,
+        "commit_s": 1.1228404994120824,
+        "near_m": 3.470797686028215
+      },
+      "objective": 0.4116666666666666,
+      "collision_rate": 0.31666666666666665,
+      "success_rate": 0.6833333333333333,
+      "default_objective": 0.4875,
+      "default_collision_rate": 0.375,
+      "default_success_rate": 0.625,
+      "trials": 61
+    }
+  }
+}

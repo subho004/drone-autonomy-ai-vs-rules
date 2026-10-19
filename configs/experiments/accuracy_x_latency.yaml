@@ -1,0 +1,17 @@
+# Separates speed from smartness: the same oracle with a fixed error rate flown across the
+# latency sweep. Shows where extra accuracy stops paying and where extra speed does.
+name: accuracy_x_latency
+suite:
+  name: pilot
+  n: 120
+  base_seed: 1000
+  n_impossible: 0
+latency_sweep_ms: [0, 50, 100, 200, 300, 500, 1000, 2000]
+shield: [0]
+cadence: [sequential]
+reps: 1
+arms:
+  - {id: acc100, kind: oracle, measured: false}
+  - {id: acc90, kind: oracle_err, config: {error_rate: 0.10}, measured: false}
+  - {id: acc80, kind: oracle_err, config: {error_rate: 0.20}, measured: false}
+  - {id: acc60, kind: oracle_err, config: {error_rate: 0.40}, measured: false}

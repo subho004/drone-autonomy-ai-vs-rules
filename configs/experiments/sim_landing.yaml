@@ -1,0 +1,27 @@
+# A4 engine-out landing-site choice.
+name: sim_landing
+notes: A4 engine-out landing-site choice.
+suite:
+  name: landing
+  kind: landing
+  n: 24
+  base_seed: 5400
+latency_sweep_ms:
+- 0
+- 300
+- 600
+- 1000
+- 1500
+- 2500
+shield:
+- 0
+cadence:
+- sequential
+reps: 1
+arms:
+- id: site_best
+  kind: site_best
+  measured: false
+- id: site_nearest
+  kind: site_nearest
+  measured: false

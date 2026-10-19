@@ -1,0 +1,20 @@
+{
+  "scenario_seed": 5312,
+  "frames": 257,
+  "sides": [
+    {
+      "flight_id": 19485,
+      "label": "straight intruder, 300 ms",
+      "outcome": "success",
+      "success": true,
+      "task": {}
+    },
+    {
+      "flight_id": 18981,
+      "label": "steering intruder, 300 ms",
+      "outcome": "collision",
+      "success": false,
+      "task": {}
+    }
+  ]
+}

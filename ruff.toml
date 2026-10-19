@@ -1,0 +1,8 @@
+# Shared by the local ruff and the pre-commit ruff so both enforce the same rules.
+[lint.per-file-ignores]
+# Scripts bootstrap sys.path before importing project modules (guide: runnable from any cwd).
+"scripts/*.py" = ["E402"]
+
+[lint.flake8-bugbear]
+# FastAPI dependency injection is the guide's pattern (`service: X = Depends(...)`).
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query", "fastapi.Path"]

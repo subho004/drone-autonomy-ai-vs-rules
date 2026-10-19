@@ -1,0 +1,10 @@
+# API + harness + domain (what requirements.txt includes)
+fastapi>=0.136.3
+uvicorn>=0.49.0
+pydantic>=2.13.4
+pydantic-settings>=2.14.1
+SQLAlchemy[asyncio]>=2.1.1,<2.2
+aiosqlite>=0.22.1
+httpx[http2]>=0.28.1
+numpy>=2.5.3
+PyYAML>=6.0
