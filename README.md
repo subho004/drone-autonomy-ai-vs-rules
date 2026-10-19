@@ -20,7 +20,7 @@ A local, no-Docker benchmark that flies a simulated drone through adversarial ev
 [![Live run cost](https://img.shields.io/badge/live%20run-%240.45-success)](docs/LIVE-RESULTS.md)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](CONTRIBUTING.md)
 
-[**Demo**](#demo) · [**Mission demo**](#mission-demo-the-best-model-flies-a-real-task) · [**Results**](#results) · [**Quick start**](#quick-start) · [**How it works**](#how-it-works) · [**Full live findings**](docs/LIVE-RESULTS.md) · [**Plan**](docs/MASTER-PLAN.md)
+[**Demo**](#demo) · [**Mission demo**](#mission-demo-the-best-model-flies-a-real-task) · [**Results**](#results) · [**Quick start**](#quick-start) · [**Architecture**](docs/ARCHITECTURE.md) · [**Full live findings**](docs/LIVE-RESULTS.md) · [**Plan**](docs/MASTER-PLAN.md)
 
 <br>
 
@@ -249,51 +249,6 @@ The script drives a real Chromium against the dashboard, so the media is always 
 
 </details>
 
-## How it works
-
-A short version follows; the full guide with every module, diagram and extension recipe is **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
-
-```mermaid
-flowchart LR
-    S["Scenario<br/>seeded JSON, certified avoidable"] --> W["PyBullet world<br/>wind, battery, GPS, obstacles"]
-    W --> O["Observation<br/>16-ray ring + flags"]
-    O --> P["DecisionProvider<br/>Jev, LLM, FSM, oracle, ..."]
-    P --> D["Decision<br/>action + probabilities + latency"]
-    D --> L["Latency policy<br/>apply at t + ceil(L/dt)"]
-    L --> E["ActionExecutor"]
-    E --> SH["Reflex shield<br/>(optional)"]
-    SH --> C["PID controller"]
-    C --> W
-    D -. recorded .-> DB[("SQLite + Parquet")]
-    DB --> UI["Dashboard · report · replay"]
-```
-
-- **Time model.** A decision requested at tick `t` is applied at `t + ceil(L/dt)` and the previous action stays in force meanwhile. Provider calls are made synchronously ("pause and charge"), so wall time spent in an API call never advances the simulator; it is converted to ticks instead.
-- **Reaction budget `B`.** The extra time, beyond the physical minimum, that a decision layer has before avoidance becomes impossible. A layer with effective latency `L` can only avoid scenarios with `B` of roughly `L` or more, so collision rate against latency is the cumulative distribution of the budgets. Always report curves with the budget distribution.
-- **Arms.** `waypoint` (no avoidance), `reflex_ttc` and `fsm` (rule-based, tuned), `oracle` and `oracle_err*` (privileged; fixed accuracy for separating speed from smartness), `always_hover` and `random` (floors), plus live providers.
-- **11 actions.** `FORWARD`, `LEFT`, `RIGHT`, `ASCEND`, `DESCEND`, `BRAKE`, `HOVER`, `AVOID_LEFT`, `AVOID_RIGHT`, `RETURN_HOME`, `EMERGENCY_LAND`. Models never touch the motors.
-- **Shield.** A reflex layer that brakes forward motion when sensed range enters the stopping envelope. It never cancels a sidestep in progress.
-
-## Project layout
-
-| Path | What |
-|---|---|
-| `app/domain/` | Action enum, `Observation`, `Decision`, `DecisionProvider` protocol, trajectory file contract |
-| `app/sim/` | PyBullet world (wind, gusts, battery, obstacles, a steering intruder, walls, rays), mission and task trackers (follow, zones, landing sites), two-drone world, inspection world, seeded random streams |
-| `app/controllers/` | Action executor, reflex shield, classical arms |
-| `app/oracle/` | Ground-truth action labeller (`label_v1`) |
-| `app/scenarios/` | Scenario spec, calibration, generator + certification, mission generator |
-| `app/providers/` | Jev / decision-endpoint, OpenAI, Gemini, mock; prompt encoding, parsing, cache, budget ledger |
-| `app/harness/` | Flight runner, latency policies, SQLite store and queue, worker, supervisor |
-| `app/analysis/` | Statistics (Wilson, McNemar, Holm, power) and the static report |
-| `app/render/` | 3D renderers (PyBullet scene, chase camera, HUD) for the mission demo and the simulations, and the video pipeline |
-| `app/api/v1/`, `app/services/`, `app/repositories/` | Read-only FastAPI: results, curves, replay, SSE progress |
-| `static/dashboard.html` | Single-file dashboard: curves, tables, flights, replay with decision Gantt |
-| `configs/experiments/` | Experiment YAML; `configs/tuned_arms.json` holds tuned thresholds |
-| `scripts/` | Setup, tuning, experiment and live runners, reports, demo seed, media capture |
-| `tests/unit/` | Unit and integration tests |
-| `docs/` | [Findings](docs/FINDINGS.md), [architecture](docs/ARCHITECTURE.md), [master plan](docs/MASTER-PLAN.md), [live results](docs/LIVE-RESULTS.md), [mission demo](docs/MISSION-DEMO.md), [simulations](docs/SIMULATIONS.md), [build log](docs/PROGRESS.md), [15+ research notes](docs/research/) |
-
 ## Limitations and roadmap
 
 The ten Group A simulation ideas are built and written up in [docs/SIMULATIONS.md](docs/SIMULATIONS.md). The remaining ideas (latency-aware prompting, cadence sweeps, latency tails, a hybrid three-tier controller, ...), ranked with effort and falsifiable predictions, are in **[docs/SIMULATION-IDEAS.md](docs/SIMULATION-IDEAS.md)**.
@@ -313,8 +268,6 @@ Issues and pull requests are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md). Th
 .venv/bin/ruff check . && .venv/bin/ruff format app scripts tests utils && .venv/bin/mypy --explicit-package-bases . && .venv/bin/python -m pytest -q
 ```
 
-Project conventions live in [`.github/copilot-instructions.md`](.github/copilot-instructions.md) (full type hints, class-based services, no `print`, `uv`).
-
 ## Acknowledgements
 
 - [gym-pybullet-drones](https://github.com/learnsyslab/gym-pybullet-drones) and [PyBullet](https://pybullet.org/) for the simulator and the PID controller.
@@ -324,4 +277,4 @@ Project conventions live in [`.github/copilot-instructions.md`](.github/copilot-
 
 ## License
 
-[MIT](LICENSE). API keys are read from `.env` (git-ignored) and never logged or stored.
+[MIT](LICENSE).
