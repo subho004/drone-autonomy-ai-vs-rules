@@ -20,6 +20,9 @@ wheels/
 *.db-wal
 *.db-shm
 .DS_Store
+# the main database is committed compressed (data/drone_jev.db.gz, GitHub's 100 MB limit);
+# unpack it locally with: gunzip -k data/drone_jev.db.gz
+data/drone_jev.db
 
 logs/
 

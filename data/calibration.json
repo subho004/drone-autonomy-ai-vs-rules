@@ -1,0 +1,11 @@
+{
+  "id": "8c98cbfb34",
+  "version": "cal_v1",
+  "d_min0": {
+    "static:0.0": 1.139,
+    "approach:1.0": 1.609,
+    "approach:2.0": 2.147,
+    "cross:1.0": 1.072,
+    "cross:2.0": 1.206
+  }
+}
